@@ -2774,21 +2774,27 @@
         const protein = food.nutrients.find(n => n.nutrientName === 'Protein')?.value || 0;
         const carbs = food.nutrients.find(n => n.nutrientName === 'Carbohydrate, by difference')?.value || 0;
         const fat = food.nutrients.find(n => n.nutrientName === 'Total lipid (fat)')?.value || 0;
+        const fiber = food.nutrients.find(n => n.nutrientName === 'Fiber, total dietary')?.value || 0;
+    const sugar = food.nutrients.find(n => n.nutrientName === 'Sugars, total including NLEA')?.value || 0;
+    const sodium = food.nutrients.find(n => n.nutrientName === 'Sodium, Na')?.value || 0;
 
         foodDiv.innerHTML = `
           <div class="food-name">${food.description}</div>
           <div class="text-sm text-neutral-500">
-            ${Math.round(calories)}kcal | P: ${Math.round(protein)}g | C: ${Math.round(carbs)}g | F: ${Math.round(fat)}g
+            ${Math.round(calories)}kcal | P: ${Math.round(protein)}g | C: ${Math.round(carbs)}g | F: ${Math.round(fat)}g | Fiber: ${Math.round(fiber)}g | Sugar: ${Math.round(sugar)}g | Sodium: ${Math.round(sodium)}mg
           </div>
         `;
 
         foodDiv.addEventListener('click', () => {
           // Fill the form with the selected food data
           document.getElementById('food-name').value = food.description;
-          document.getElementById('food-calories').value = Math.round(calories);
-          document.getElementById('food-protein').value = Math.round(protein);
-          document.getElementById('food-carbs').value = Math.round(carbs);
-          document.getElementById('food-fat').value = Math.round(fat);
+    document.getElementById('food-calories').value = Math.round(calories);
+    document.getElementById('food-protein').value = Math.round(protein);
+    document.getElementById('food-carbs').value = Math.round(carbs);
+    document.getElementById('food-fat').value = Math.round(fat);
+    document.getElementById('food-fiber').value = Math.round(fiber); // Add fiber
+    document.getElementById('food-sugar').value = Math.round(sugar); // Add sugar
+    document.getElementById('food-sodium').value = Math.round(sodium); // Add sodium
           
           // Clear search results
           resultsDiv.innerHTML = '';
