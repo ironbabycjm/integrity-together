@@ -1,0 +1,2679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30-Day Wellness Journey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Embedded CSS -->
+    <style>
+/* 
+   Wellness Journey App - Combined CSS
+   Includes: main.css, calendar.css, exercises.css, achievements.css
+*/
+
+/* ===== MAIN STYLES ===== */
+:root {
+    /* Dopamine-inducing color palette */
+    --primary: #1E88E5;         /* Blue - main app color */
+    --primary-light: #42A5F5;   /* Lighter blue */
+    --primary-dark: #1565C0;    /* Darker blue */
+    --secondary: #FFA726;       /* Orange - accent color */
+    --secondary-light: #FFB74D; /* Lighter orange */
+    --secondary-dark: #F57C00;  /* Darker orange */
+    --success: #4caf50;         /* Green - completion */
+    --warning: #ff9800;         /* Orange - streak */
+    --danger: #f44336;          /* Red */
+    --light: #f8f9fa;           /* Off-white */
+    --dark: #343a40;            /* Dark gray */
+    --gray: #6c757d;            /* Medium gray */
+    --light-gray: #e2e3e5;      /* Light gray */
+    
+    /* Other variables */
+    --border-radius: 12px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+.app-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    min-height: 100vh;
+    box-shadow: var(--box-shadow);
+    position: relative;
+    overflow-x: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    padding: 1.5rem;
+    color: white;
+    text-align: center;
+    border-radius: 0 0 25px 25px;
+    box-shadow: 0 4px 10px rgba(30, 136, 229, 0.3);
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.tagline {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+nav {
+    background: white;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--light-gray);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    padding: 0.8rem 0.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--gray);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-btn i {
+    font-size: 1.2rem;
+}
+
+.nav-btn:hover, .nav-btn.active {
+    color: var(--primary);
+    background-color: rgba(30, 136, 229, 0.1);
+}
+
+main {
+    padding: 1rem;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+h2 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.6rem;
+}
+
+.section-desc {
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: var(--light);
+    border-top: 1px solid var(--light-gray);
+    font-size: 0.9rem;
+    color: var(--gray);
+    position: relative;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 3px 8px rgba(30, 136, 229, 0.3);
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(30, 136, 229, 0.4);
+}
+
+.btn-secondary {
+    background-color: var(--light-gray);
+    color: var(--dark);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background-color: #d1d3d4;
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-danger:hover {
+    background-color: #e53935;
+}
+
+.btn-small {
+    background: none;
+    color: var(--gray);
+    border: 1px solid var(--light-gray);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 1rem;
+}
+
+.btn-small:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background-color: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    color: var(--gray);
+    cursor: pointer;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background-color: var(--light-gray);
+    color: var(--dark);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 1rem;
+    font-weight: 500;
+}
+
+.back-button:hover {
+    background-color: #d1d3d4;
+    transform: translateY(-2px);
+}
+
+.back-button i {
+    font-size: 0.9rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.celebration-modal .modal-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+.celebration-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.celebration-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    font-size: 1.5rem;
+    color: var(--warning);
+}
+
+.celebration-icons i {
+    animation: bounce 1s infinite alternate;
+}
+
+.celebration-icons i:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.celebration-icons i:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Motivation Card */
+.motivation-card {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-radius: var(--border-radius);
+    padding: 1.2rem;
+    margin: 1rem 0;
+    text-align: center;
+    border-left: 4px solid var(--secondary);
+    box-shadow: var(--box-shadow);
+}
+
+.motivation-card p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+.quote-author {
+    font-size: 0.9rem;
+    color: var(--gray);
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+/* Today View */
+.today-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.day-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#current-day {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.streak-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--warning);
+    font-size: 0.9rem;
+}
+
+#current-streak {
+    font-weight: 700;
+}
+
+.streak-container i {
+    margin-left: 5px;
+    animation: flame 1.5s infinite alternate;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray);
+    font-style: italic;
+}
+
+.workout-complete-container {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.2));
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+}
+
+.workout-complete-container h3 {
+    color: var(--success);
+    margin-bottom: 1rem;
+}
+
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    animation: confetti-fall 3s linear forwards;
+}
+
+/* Progress Stats */
+.progress-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: white;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    border-top: 3px solid var(--primary);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--gray);
+}
+
+.progress-visualization, .weekly-chart {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    box-shadow: var(--box-shadow);
+}
+
+.progress-visualization h3, .weekly-chart h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.progress-bar-container {
+    height: 20px;
+    background-color: var(--light-gray);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--primary-light), var(--primary));
+    border-radius: 10px;
+    width: 0;
+    transition: width 1s ease;
+}
+
+.progress-text {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.chart-container {
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding-top: 1rem;
+}
+
+.chart-bar {
+    flex: 1;
+    background: linear-gradient(to top, var(--primary-light), var(--primary));
+    border-radius: 5px 5px 0 0;
+    min-height: 10px;
+    transition: height 1s ease;
+    position: relative;
+}
+
+.chart-label {
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+/* ===== CALENDAR STYLES ===== */
+.calendar-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.calendar-day {
+    position: relative;
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid var(--light-gray);
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.calendar-day:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    border-color: var(--primary-light);
+}
+
+.calendar-day.current {
+    border: 2px solid var(--primary);
+    background-color: rgba(30, 136, 229, 0.05);
+}
+
+.calendar-day.completed {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.2));
+    border-color: var(--success);
+}
+
+.calendar-day.locked {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background-color: var(--light-gray);
+}
+
+.day-number {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.day-status {
+    font-size: 0.7rem;
+    margin-top: 3px;
+    text-align: center;
+}
+
+.calendar-day.completed .day-status {
+    color: var(--success);
+}
+
+.day-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 0.8rem;
+}
+
+.completed .day-icon {
+    color: var(--success);
+}
+
+.current .day-icon {
+    color: var(--primary);
+}
+
+.calendar-day-tooltip {
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--dark);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition);
+    width: max-content;
+    max-width: 150px;
+    text-align: center;
+    z-index: 5;
+}
+
+.calendar-day:hover .calendar-day-tooltip {
+    opacity: 0.9;
+    bottom: 105%;
+}
+
+/* Calendar day hover effects */
+.calendar-day:active {
+    transform: scale(0.95);
+}
+
+/* Week labels */
+.week-label {
+    grid-column: 1 / -1;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    font-weight: 600;
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+/* ===== EXERCISE STYLES ===== */
+.workout-container {
+    margin-top: 1.5rem;
+}
+
+.exercise-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    position: relative;
+}
+
+.exercise-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-header {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(30, 136, 229, 0.05);
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.exercise-title {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.exercise-title i {
+    margin-right: 10px;
+    color: var(--primary);
+}
+
+.exercise-content {
+    padding: 1rem;
+}
+
+.exercise-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.exercise-detail {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.exercise-detail i {
+    margin-right: 5px;
+    font-size: 0.9rem;
+}
+
+.exercise-instructions {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.exercise-footer {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--light);
+    border-top: 1px solid var(--light-gray);
+}
+
+.exercise-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-exercise {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn-exercise.details {
+    background-color: var(--light-gray);
+    color: var(--dark);
+}
+
+.btn-exercise.complete {
+    background-color: var(--success);
+    color: white;
+}
+
+.btn-exercise:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.exercise-status {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status-incomplete {
+    color: var(--gray);
+}
+
+.status-complete {
+    color: var(--success);
+    font-weight: 600;
+}
+
+.exercise-card.completed {
+    border-left: 4px solid var(--success);
+}
+
+.exercise-card.completed .exercise-header {
+    background-color: rgba(76, 175, 80, 0.05);
+}
+
+.checkmark {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--success);
+    color: white;
+    text-align: center;
+    line-height: 20px;
+    margin-right: 5px;
+}
+
+/* Exercise modal */
+.modal .exercise-card {
+    box-shadow: none;
+    margin-bottom: 0;
+}
+
+.modal .exercise-card:hover {
+    transform: none;
+}
+
+.exercise-image-placeholder {
+    width: 100%;
+    height: 200px;
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: var(--gray);
+    font-style: italic;
+}
+
+.exercise-benefits {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: rgba(255, 167, 38, 0.1);
+    border-radius: var(--border-radius);
+    border-left: 3px solid var(--secondary);
+}
+
+.exercise-benefits h4 {
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.benefits-list {
+    list-style-type: none;
+}
+
+.benefits-list li {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.benefits-list li:before {
+    content: "•";
+    color: var(--secondary);
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.modifications {
+    margin-top: 1rem;
+}
+
+.modifications h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: var(--dark);
+}
+
+.modification-option {
+    padding: 0.5rem;
+    border-left: 2px solid var(--light-gray);
+    margin-bottom: 0.5rem;
+}
+
+.modification-option h5 {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    color: var(--primary);
+}
+
+.form-illustration {
+    margin-top: 1rem;
+    text-align: center;
+    font-style: italic;
+    color: var(--gray);
+    font-size: 0.9rem;
+    padding: 1rem;
+    border: 1px dashed var(--light-gray);
+    border-radius: var(--border-radius);
+}
+
+/* ===== ACHIEVEMENTS STYLES ===== */
+.achievements-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.achievement-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    position: relative;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.achievement-icon {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    color: white;
+    font-size: 2.5rem;
+}
+
+.achievement-icon i {
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.achievement-content {
+    padding: 1.2rem;
+}
+
+.achievement-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+}
+
+.achievement-description {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-bottom: 1rem;
+}
+
+.achievement-progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.achievement-progress-bar {
+    height: 6px;
+    background-color: var(--light-gray);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.achievement-progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--secondary), var(--primary));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.achievement-card.unlocked .achievement-icon {
+    background: linear-gradient(135deg, var(--success), #8bc34a);
+}
+
+.achievement-card.unlocked {
+    border: 2px solid var(--success);
+}
+
+.achievement-card.locked {
+    opacity: 0.7;
+}
+
+.achievement-card.locked .achievement-icon {
+    background: linear-gradient(135deg, var(--gray), #a1a1a1);
+}
+
+.unlocked-date {
+    font-size: 0.8rem;
+    color: var(--success);
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+.achievement-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--warning);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: 0 3px 5px rgba(255, 152, 0, 0.3);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.achievement-card.unlocked .achievement-badge {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.achievement-alert {
+    background-color: rgba(255, 152, 0, 0.1);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin: 1rem 0;
+    border-left: 3px solid var(--warning);
+    animation: pulse 2s infinite;
+}
+
+.achievement-alert h4 {
+    color: var(--warning);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.achievement-alert h4:before {
+    content: "🏆";
+    margin-right: 5px;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+}
+
+@keyframes flame {
+    from { transform: scale(1); opacity: 0.8; }
+    to { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100%) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(1000%) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .nav-btn {
+        font-size: 0.8rem;
+        padding: 0.6rem 0.4rem;
+    }
+    
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .today-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .day-indicator {
+        align-items: flex-start;
+        margin-top: 0.5rem;
+    }
+    
+    .progress-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .calendar-container {
+        gap: 5px;
+    }
+    
+    .day-number {
+        font-size: 0.9rem;
+    }
+    
+    .day-status {
+        font-size: 0.6rem;
+    }
+    
+    .achievements-container {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>30-Day Wellness Journey</h1>
+            <p class="tagline">Every small step builds a stronger you</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><button id="today-btn" class="nav-btn active"><i class="fas fa-calendar-day"></i> Today</button></li>
+                <li><button id="calendar-btn" class="nav-btn"><i class="fas fa-calendar-alt"></i> Calendar</button></li>
+                <li><button id="progress-btn" class="nav-btn"><i class="fas fa-chart-line"></i> Progress</button></li>
+                <li><button id="achievements-btn" class="nav-btn"><i class="fas fa-medal"></i> Achievements</button></li>
+            </ul>
+        </nav>
+
+        <main>
+            <!-- Today's workout view -->
+            <section id="today" class="view active">
+                <div class="today-header">
+                    <h2>Today's Workout</h2>
+                    <div class="day-indicator">
+                        <span id="current-day">Day 1</span>
+                        <div class="streak-container">
+                            <span id="current-streak">0</span> day streak <i class="fas fa-fire"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="motivation-card">
+                    <p id="daily-quote">Every moment is a fresh beginning.</p>
+                    <p class="quote-author">— T.S. Eliot</p>
+                </div>
+
+                <div id="workout-container" class="workout-container">
+                    <!-- Exercise content will be loaded here -->
+                    <div class="loading">Loading today's exercises...</div>
+                </div>
+
+                <div class="workout-complete-container hidden" id="workout-complete">
+                    <div class="confetti-container" id="confetti-container"></div>
+                    <h3>Today's Workout Complete!</h3>
+                    <p>Excellent work! You're building new pathways in your brain.</p>
+                    <div class="celebration-icons">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-trophy"></i>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <button id="mark-complete-btn" class="btn-primary">Mark Complete</button>
+                </div>
+            </section>
+
+            <!-- Calendar view -->
+            <section id="calendar" class="view">
+                <h2>30-Day Journey</h2>
+                <p class="section-desc">Track your progress through all 30 days</p>
+                
+                <div class="calendar-container" id="calendar-container">
+                    <!-- Calendar will be generated here -->
+                </div>
+            </section>
+
+            <!-- Progress view -->
+            <section id="progress" class="view">
+                <h2>Your Progress</h2>
+                <p class="section-desc">See how far you've come</p>
+                
+                <div class="progress-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="days-completed">0</div>
+                        <div class="stat-label">Days Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-exercises">0</div>
+                        <div class="stat-label">Exercises Done</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="longest-streak">0</div>
+                        <div class="stat-label">Longest Streak</div>
+                    </div>
+                </div>
+                
+                <div class="progress-visualization">
+                    <h3>Completion Progress</h3>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <div class="progress-text" id="progress-percentage">0%</div>
+                </div>
+                
+                <div class="weekly-chart">
+                    <h3>Weekly Activity</h3>
+                    <div class="chart-container" id="weekly-chart">
+                        <!-- Weekly chart will be generated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements view -->
+            <section id="achievements" class="view">
+                <h2>Your Achievements</h2>
+                <p class="section-desc">Celebrate your victories, big and small</p>
+                
+                <div class="achievements-container" id="achievements-container">
+                    <!-- Achievements will be generated here -->
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Keep going, you're doing amazing! 🌟</p>
+            <button id="reset-progress-btn" class="btn-small">Reset Progress</button>
+        </footer>
+
+        <!-- Modal for exercise details -->
+        <div class="modal" id="exercise-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div id="modal-content"></div>
+            </div>
+        </div>
+
+        <!-- Reset confirmation modal -->
+        <div class="modal" id="reset-modal">
+            <div class="modal-content">
+                <h3>Reset Progress?</h3>
+                <p>This will erase all your progress and start from Day 1. This action cannot be undone.</p>
+                <div class="modal-buttons">
+                    <button id="confirm-reset" class="btn-danger">Yes, Reset</button>
+                    <button id="cancel-reset" class="btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day completed modal -->
+        <div class="modal celebration-modal" id="day-complete-modal">
+            <div class="modal-content">
+                <div class="celebration-header">
+                    <svg class="success-svg" width="80" height="80">
+                        <use href="#success-icon"></use>
+                    </svg>
+                    <h3>Day Complete!</h3>
+                </div>
+                <p>You've taken another step toward a healthier you. Keep the momentum going!</p>
+                <div id="achievement-unlocked" class="achievement-alert hidden">
+                    <h4>Achievement Unlocked!</h4>
+                    <div id="new-achievement-content"></div>
+                </div>
+                <button id="close-celebration" class="btn-primary">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SVG Definitions -->
+    <svg style="display: none;">
+        <!-- Success icon -->
+        <symbol id="success-icon" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="#4CAF50" />
+            <path fill="white" d="M41 50L32 41l-4 4 13 13 28-28-4-4z" />
+            <circle cx="50" cy="50" r="45" fill="none" stroke="#E8F5E9" stroke-width="2" stroke-dasharray="6,3" />
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#C8E6C9" stroke-width="1" />
+            
+            <!-- Decorative elements -->
+            <circle cx="30" cy="30" r="3" fill="#FFFFFF" opacity="0.6" />
+            <circle cx="70" cy="25" r="2" fill="#FFFFFF" opacity="0.7" />
+            <circle cx="75" cy="60" r="4" fill="#FFFFFF" opacity="0.5" />
+            <circle cx="35" cy="70" r="2.5" fill="#FFFFFF" opacity="0.6" />
+        </symbol>
+
+        <!-- Medal icon -->
+        <symbol id="medal-icon" viewBox="0 0 100 120">
+            <!-- Medal ribbon -->
+            <path d="M30 50 L30 20 Q30 10 40 5 L50 0 L60 5 Q70 10 70 20 L70 50 Z" fill="#1E88E5" />
+            <path d="M30 50 L30 20 Q30 10 40 5 L50 0 L50 50 Z" fill="#42A5F5" />
+            
+            <!-- Medal body -->
+            <circle cx="50" cy="75" r="25" fill="#FFD700" stroke="#FFC107" stroke-width="2" />
+            <circle cx="50" cy="75" r="20" fill="#FFEB3B" />
+            
+            <!-- Star in the center -->
+            <path d="M50 60 L53.5 68.5 L62.7 69.5 L56.4 75.8 L57.6 85 L50 80.5 L42.4 85 L43.6 75.8 L37.3 69.5 L46.5 68.5 Z" fill="#FF9800" />
+            
+            <!-- Decorative elements -->
+            <circle cx="40" cy="67" r="2" fill="#FFF9C4" />
+            <circle cx="60" cy="67" r="2" fill="#FFF9C4" />
+            <circle cx="50" cy="90" r="3" fill="#FFF9C4" />
+            <circle cx="43" cy="82" r="1.5" fill="#FFF9C4" />
+            <circle cx="57" cy="82" r="1.5" fill="#FFF9C4" />
+            
+            <!-- Subtle shine effect -->
+            <path d="M35 65 Q50 55 65 65 Q60 80 50 85 Q40 80 35 65 Z" fill="#FFFDE7" opacity="0.3" />
+        </symbol>
+
+        <!-- Streak/Flame icon -->
+        <symbol id="streak-icon" viewBox="0 0 100 100">
+            <!-- Main flame -->
+            <path d="M50 10 Q60 25 55 40 Q70 35 70 50 Q75 65 60 75 Q55 85 50 90 Q45 85 40 75 Q25 65 30 50 Q30 35 45 40 Q40 25 50 10 Z" fill="#FF9800" />
+            
+            <!-- Inner flame -->
+            <path d="M50 20 Q57 30 53 45 Q65 40 63 55 Q67 65 55 72 Q52 80 50 82 Q48 80 45 72 Q33 65 37 55 Q35 40 47 45 Q43 30 50 20 Z" fill="#FFCC80" />
+            
+            <!-- Center core -->
+            <path d="M50 35 Q54 45 51 55 Q56 50 56 60 Q58 67 50 70 Q42 67 44 60 Q44 50 49 55 Q46 45 50 35 Z" fill="#FFECB3" />
+            
+            <!-- Sparks -->
+            <circle cx="45" cy="30" r="2" fill="#FFFFFF" opacity="0.7" />
+            <circle cx="55" cy="35" r="1.5" fill="#FFFFFF" opacity="0.8" />
+            <circle cx="60" cy="45" r="2" fill="#FFFFFF" opacity="0.6" />
+            <circle cx="40" cy="45" r="1" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="25" r="1.5" fill="#FFFFFF" opacity="0.7" />
+            
+            <!-- Glow effect -->
+            <circle cx="50" cy="55" r="30" fill="url(#glow)" opacity="0.4" />
+            
+            <!-- Definitions -->
+            <defs>
+                <radialGradient id="glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                    <stop offset="0%" stop-color="#FFCC80" stop-opacity="0.8" />
+                    <stop offset="100%" stop-color="#FF9800" stop-opacity="0" />
+                </radialGradient>
+            </defs>
+        </symbol>
+    </svg>
+
+    <!-- Embedded JavaScript -->
+    <script>
+// Combining all JavaScript files
+
+// Data Manager - Contains workout data
+const dataManager = (() => {
+    // 30-day workout plan data
+    const workoutPlan = {
+        // Week 1: Foundation & Mobility
+        // Day 1: Full Body Strength (Bodyweight)
+        1: [
+            {
+                id: '1-1',
+                title: 'Squats',
+                type: 'strength',
+                duration: '3 sets of 12 reps',
+                intensity: 'Moderate',
+                instructions: 'Stand with feet shoulder-width apart. Lower your body as if sitting in a chair by bending knees and pushing hips back. Keep chest up and weight in heels. Return to standing.',
+                benefits: ['Strengthens legs and glutes', 'Improves core stability', 'Enhances functional movement', 'Boosts metabolism'],
+                modifications: [
+                    {
+                        title: 'For beginners',
+                        description: 'Use a chair behind you for support or to touch lightly at the bottom of the movement.'
+                    },
+                    {
+                        title: 'For advanced',
+                        description: 'Add a jump at the top of the movement or hold weights.'
+                    }
+                ]
+            },
+            {
+                id: '1-2',
+                title: 'Push-ups',
+                type: 'strength',
+                duration: '3 sets of 10 reps',
+                intensity: 'Moderate',
+                instructions: 'Start in a plank position with hands slightly wider than shoulders. Lower your body until chest nearly touches the floor. Keep elbows at around 45° angle to your body. Push back up to starting position.',
+                benefits: ['Strengthens chest, shoulders, and triceps', 'Engages core muscles', 'Improves posture', 'Builds upper body strength'],
+                modifications: [
+                    {
+                        title: 'For beginners',
+                        description: 'Perform push-ups on knees or against a wall to reduce resistance.'
+                    },
+                    {
+                        title: 'For advanced',
+                        description: 'Try diamond push-ups or elevate feet on a step.'
+                    }
+                ]
+            },
+            {
+                id: '1-3',
+                title: 'Plank',
+                type: 'strength',
+                duration: '3 sets of 30 seconds',
+                intensity: 'Moderate',
+                instructions: 'Start in a push-up position or on forearms. Keep body in a straight line from head to heels. Engage core and hold the position without letting hips sag or pike up.',
+                benefits: ['Strengthens core', 'Improves stability', 'Engages multiple muscle groups', 'Enhances posture'],
+                modifications: [
+                    {
+                        title: 'For beginners',
+                        description: 'Hold position on knees instead of toes to reduce intensity.'
+                    },
+                    {
+                        title: 'For advanced',
+                        description: 'Try alternating leg lifts or shoulder taps while maintaining plank position.'
+                    }
+                ]
+            },
+            {
+                id: '1-4',
+                title: 'Lunges',
+                type: 'strength',
+                duration: '3 sets of 12 reps each leg',
+                intensity: 'Moderate',
+                instructions: 'Stand tall with feet hip-width apart. Step forward with one leg and lower body until both knees form 90° angles. Front knee should stay above ankle. Push through front heel to return to starting position.',
+                benefits: ['Strengthens quadriceps, hamstrings, and glutes', 'Improves balance', 'Enhances hip flexibility', 'Builds unilateral strength'],
+                modifications: [
+                    {
+                        title: 'For knee issues',
+                        description: 'Take smaller steps and don\'t bend as deeply.'
+                    },
+                    {
+                        title: 'For advanced',
+                        description: 'Add weights or try walking lunges or reverse lunges.'
+                    }
+                ]
+            },
+            {
+                id: '1-5',
+                title: 'Stretching',
+                type: 'flexibility',
+                duration: '5 minutes',
+                intensity: 'Low',
+                instructions: 'Perform a series of stretches holding each for 15-30 seconds. Include hamstring stretch, quad stretch, chest stretch, shoulder stretch, and triceps stretch. Breathe deeply throughout.',
+                benefits: ['Improves flexibility', 'Reduces muscle tension', 'Promotes recovery', 'Increases range of motion'],
+                modifications: [
+                    {
+                        title: 'For tight muscles',
+                        description: 'Use props like a towel or strap to assist stretches.'
+                    }
+                ]
+            }
+        ],
+        
+        // Day 2: Cardio & Core
+        2: [
+            {
+                id: '2-1',
+                title: 'Jump Rope',
+                type: 'cardio',
+                duration: '5 minutes',
+                intensity: 'Moderate-High',
+                instructions: 'Jump rope continuously for 5 minutes. If needed, break into intervals of 30 seconds on, 30 seconds rest. Focus on landing softly on the balls of your feet.',
+                benefits: ['Improves cardiovascular fitness', 'Enhances coordination', 'Burns calories efficiently', 'Increases agility'],
+                modifications: [
+                    {
+                        title: 'No jump rope',
+                        description: 'Mimic the movement without a rope, or march in place with high knees.'
+                    },
+                    {
+                        title: 'For advanced',
+                        description: 'Try double unders or high knee jumps.'
+                    }
+                ]
+            },
+            {
+                id: '2-2',
+                title: 'Bicycle Crunches',
+                type: 'core',
+                duration: '3 sets of 15 reps',
+                intensity: 'Moderate',
+                instructions: 'Lie on your back, hands behind head, knees bent. Lift shoulders off the ground and bring right elbow toward left knee while extending right leg. Switch sides and continue alternating.',
+                benefits: ['Targets obliques and rectus abdominis', 'Improves core strength', 'Enhances rotational movement', 'Works hip flexors'],
+                modifications: [
+                    {
+                        title: 'For beginners',
+                        description: 'Keep movements smaller and slower, focusing on form over speed.'
+                    },
+                    {
+                        title: 'For advanced',
+                        description: 'Add a pause at each side or increase speed while maintaining form.'
+                    }
+                ]
+            },
+            {
+                id: '2-3',
+                title: 'Mountain Climbers',
+                type: 'cardio',
+                duration: '3 sets of 30 seconds',
+                intensity: 'High',
+                instructions: 'Start in a plank position with arms straight. Alternate drawing knees toward chest in a running motion. Keep hips level and core engaged throughout.',
+                benefits: ['Combines cardio and strength', 'Works multiple muscle groups', 'Improves coordination', 'Elevates heart rate'],
+                modifications: [
+                    {
+                        title: 'Lower impact',
+                        description: 'Slow down the pace or step feet forward instead of jumping.'
+                    },
+                    {
+                        title: 'More intense',
+                        description: 'Increase speed or add a push-up between sets.'
+                    }
+                ]
+            },
+            {
+                id: '2-4',
+                title: 'Burpees',
+                type: 'cardio',
+                duration: '3 sets of 10 reps',
+                intensity: 'High',
+                instructions: 'Start standing, then squat down and place hands on floor. Jump feet back to plank position, perform a push-up, jump feet forward to squat, then explosively jump up with arms overhead.',
+                benefits: ['Full body workout', 'Builds strength and endurance', 'Improves cardiovascular fitness', 'Burns calories efficiently'],
+                modifications: [
+                    {
+                        title: 'For beginners',
+                        description: 'Step feet back instead of jumping, omit the push-up, or remove the jump at the end.'
+                    },
+                    {
+                        title: 'For advanced',
+                        description: 'Add an additional push-up or tuck jump at the top.'
+                    }
+                ]
+            },
+            {
+                id: '2-5',
+                title: 'Cool Down Walk',
+                type: 'cardio',
+                duration: '5 minutes',
+                intensity: 'Low',
+                instructions: 'Walk at a comfortable pace to gradually bring your heart rate down. Focus on deep breathing and relaxing your muscles.',
+                benefits: ['Prevents blood pooling', 'Gradually reduces heart rate', 'Helps clear lactic acid', 'Transitions body to resting state'],
+                modifications: [
+                    {
+                        title: 'Alternative',
+                        description: 'If unable to walk, perform gentle seated or standing movements to keep blood flowing.'
+                    }
+                ]
+            }
+        ],
+        
+        // Days 3-30 exercises would continue here...
+        // For brevity, continuing with just a few more days as examples
+
+        // Day 3: Active Recovery (Mobility & Stretching)
+        3: [
+            {
+                id: '3-1',
+                title: 'Yoga Flow',
+                type: 'flexibility',
+                duration: '15 minutes',
+                intensity: 'Low-Moderate',
+                instructions: 'Perform a gentle yoga sequence including cat-cow, downward dog, warrior poses, and gentle twists. Move with your breath, holding each pose for 3-5 breaths.',
+                benefits: ['Improves flexibility', 'Releases tension', 'Enhances body awareness', 'Promotes relaxation and recovery'],
+                modifications: [
+                    {
+                        title: 'For beginners',
+                        description: 'Use props such as blocks or chairs for support, and focus on proper alignment rather than depth.'
+                    },
+                    {
+                        title: 'For limited mobility',
+                        description: 'Perform seated or chair-assisted versions of the poses.'
+                    }
+                ]
+            },
+            {
+                id: '3-2',
+                title: 'Deep Breathing',
+                type: 'mental',
+                duration: '5 minutes',
+                intensity: 'Low',
+                instructions: 'Sit or lie in a comfortable position. Place one hand on chest, one on abdomen. Inhale slowly through nose for 4 counts, feeling abdomen expand. Hold briefly, then exhale through mouth for 6 counts. Repeat for 5 minutes.',
+                benefits: ['Activates parasympathetic nervous system', 'Reduces stress hormones', 'Improves oxygen delivery', 'Enhances mental clarity'],
+                modifications: [
+                    {
+                        title: 'Box breathing',
+                        description: 'Try inhaling for 4, holding for 4, exhaling for 4, and holding for 4 counts.'
+                    },
+                    {
+                        title: 'With visualization',
+                        description: 'Imagine breathing in healing energy and exhaling tension or stress.'
+                    }
+                ]
+            }
+        ],
+        
+        // Day 4: Upper Body Strength
+        4: [
+            {
+                id: '4-1',
+                title: 'Push-ups',
+                type: 'strength',
+                duration: '3 sets of 12 reps',
+                intensity: 'Moderate',
+                instructions: 'Start in plank position with hands slightly wider than shoulders. Lower chest to the ground while keeping elbows at 45° angle, then push back up. Maintain a straight line from head to heels.',
+                benefits: ['Builds chest, shoulder and tricep strength', 'Engages core', 'Improves upper body pushing power', 'Enhances stability'],
+                modifications: [
+                    {
+                        title: 'Modified version',
+                        description: 'Perform on knees or with hands elevated on a bench or wall.'
+                    },
+                    {
+                        title: 'Advanced version',
+                        description: 'Try decline push-ups with feet elevated or diamond push-ups.'
+                    }
+                ]
+            },
+            {
+                id: '4-2',
+                title: 'Triceps Dips',
+                type: 'strength',
+                duration: '3 sets of 10 reps',
+                intensity: 'Moderate',
+                instructions: 'Sit on edge of a chair or bench, hands gripping edge beside hips. Slide buttocks off the edge, lower body by bending elbows to about 90°, then press back up.',
+                benefits: ['Targets triceps', 'Strengthens shoulders', 'Improves pushing function', 'Enhances upper body stability'],
+                modifications: [
+                    {
+                        title: 'Easier option',
+                        description: 'Keep feet closer to body or bend knees to reduce resistance.'
+                    },
+                    {
+                        title: 'More difficult',
+                        description: 'Extend legs straight or elevate feet on another chair.'
+                    }
+                ]
+            }
+        ]
+    };
+
+    // Additional days 5-30 would be defined here with their exercises
+    // For brevity, we've included just a few example days
+    
+    // Get exercises for a specific day
+    const getExercisesForDay = (day) => {
+        return workoutPlan[day] || [];
+    };
+    
+    // Get workout plan for all 30 days
+    const getFullWorkoutPlan = () => {
+        return workoutPlan;
+    };
+    
+    return {
+        getExercisesForDay,
+        getFullWorkoutPlan
+    };
+})();
+
+// Storage Manager - Handles local storage for user progress
+const storageManager = (() => {
+    // Default user data structure
+    const defaultUserData = {
+        currentDay: 0,
+        completedDays: [],
+        completedExercises: [],
+        currentStreak: 0,
+        longestStreak: 0,
+        lastCompletedDate: null,
+        achievements: []
+    };
+
+    // Local storage key for user data
+    const USER_DATA_KEY = 'wellness_journey_user_data';
+
+    // Get user data from localStorage or return default if not exists
+    const getUserData = () => {
+        const storedData = localStorage.getItem(USER_DATA_KEY);
+        if (storedData) {
+            try {
+                return JSON.parse(storedData);
+            } catch (e) {
+                console.error('Error parsing user data from localStorage:', e);
+                return { ...defaultUserData };
+            }
+        }
+        return { ...defaultUserData };
+    };
+
+    // Save user data to localStorage
+    const saveUserData = (userData) => {
+        try {
+            localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
+            return true;
+        } catch (e) {
+            console.error('Error saving user data to localStorage:', e);
+            return false;
+        }
+    };
+
+    // Reset user data to default
+    const resetUserData = () => {
+        try {
+            localStorage.setItem(USER_DATA_KEY, JSON.stringify({ ...defaultUserData }));
+            return true;
+        } catch (e) {
+            console.error('Error resetting user data in localStorage:', e);
+            return false;
+        }
+    };
+
+    // Mark a specific exercise as completed
+    const completeExercise = (exerciseId) => {
+        const userData = getUserData();
+        
+        if (!userData.completedExercises.includes(exerciseId)) {
+            userData.completedExercises.push(exerciseId);
+            saveUserData(userData);
+            return true;
+        }
+        
+        return false;
+    };
+
+    // Check if an exercise is completed
+    const isExerciseCompleted = (exerciseId) => {
+        const userData = getUserData();
+        return userData.completedExercises.includes(exerciseId);
+    };
+
+    // Mark a specific day as completed
+    const completeDay = (dayNumber) => {
+        const userData = getUserData();
+        
+        if (!userData.completedDays.includes(dayNumber)) {
+            userData.completedDays.push(dayNumber);
+            userData.completedDays.sort((a, b) => a - b);
+            saveUserData(userData);
+            return true;
+        }
+        
+        return false;
+    };
+
+    // Check if a day is completed
+    const isDayCompleted = (dayNumber) => {
+        const userData = getUserData();
+        return userData.completedDays.includes(dayNumber);
+    };
+
+    // Unlock an achievement
+    const unlockAchievement = (achievementId) => {
+        const userData = getUserData();
+        
+        if (!userData.achievements.includes(achievementId)) {
+            userData.achievements.push(achievementId);
+            saveUserData(userData);
+            return true;
+        }
+        
+        return false;
+    };
+
+    // Check if an achievement is unlocked
+    const isAchievementUnlocked = (achievementId) => {
+        const userData = getUserData();
+        return userData.achievements.includes(achievementId);
+    };
+
+    return {
+        getUserData,
+        saveUserData,
+        resetUserData,
+        completeExercise,
+        isExerciseCompleted,
+        completeDay,
+        isDayCompleted,
+        unlockAchievement,
+        isAchievementUnlocked
+    };
+})();
+
+// Calendar Manager - Handles calendar view functionality
+const calendarManager = (() => {
+    // Render the calendar grid
+    const renderCalendar = () => {
+        const calendarContainer = document.getElementById('calendar-container');
+        calendarContainer.innerHTML = '';
+        
+        const userData = storageManager.getUserData();
+        const currentDay = userData.currentDay;
+        
+        // Week labels and days
+        const weeks = [
+            { label: 'Week 1', days: [1, 2, 3, 4, 5, 6, 7] },
+            { label: 'Week 2', days: [8, 9, 10, 11, 12, 13, 14] },
+            { label: 'Week 3', days: [15, 16, 17, 18, 19, 20, 21] },
+            { label: 'Week 4', days: [22, 23, 24, 25, 26, 27, 28] },
+            { label: 'Week 5', days: [29, 30] }
+        ];
+        
+        weeks.forEach(week => {
+            // Add week label
+            const weekLabel = document.createElement('div');
+            weekLabel.className = 'week-label';
+            weekLabel.textContent = week.label;
+            calendarContainer.appendChild(weekLabel);
+            
+            // Add days for this week
+            week.days.forEach(day => {
+                const dayElement = createDayElement(day, currentDay, userData.completedDays);
+                calendarContainer.appendChild(dayElement);
+            });
+        });
+    };
+    
+    // Create an individual day element
+    const createDayElement = (day, currentDay, completedDays) => {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        
+        // Add appropriate classes based on day status
+        if (day === currentDay) {
+            dayElement.classList.add('current');
+        }
+        
+        if (completedDays.includes(day)) {
+            dayElement.classList.add('completed');
+        }
+        
+        if (day > currentDay) {
+            dayElement.classList.add('locked');
+            dayElement.setAttribute('disabled', 'true');
+        }
+        
+        // Day number
+        const dayNumber = document.createElement('div');
+        dayNumber.className = 'day-number';
+        dayNumber.textContent = day;
+        dayElement.appendChild(dayNumber);
+        
+        // Day status
+        const dayStatus = document.createElement('div');
+        dayStatus.className = 'day-status';
+        if (completedDays.includes(day)) {
+            dayStatus.textContent = 'Completed';
+            
+            // Add checkmark icon for completed days
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-check-circle day-icon';
+            dayElement.appendChild(icon);
+        } else if (day === currentDay) {
+            dayStatus.textContent = 'Today';
+            
+            // Add star icon for current day
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-star day-icon';
+            dayElement.appendChild(icon);
+        } else if (day < currentDay) {
+            dayStatus.textContent = 'Missed';
+        } else {
+            dayStatus.textContent = 'Upcoming';
+        }
+        dayElement.appendChild(dayStatus);
+        
+        // Add tooltip with exercise preview
+        if (day <= currentDay) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'calendar-day-tooltip';
+            
+            const exercises = dataManager.getExercisesForDay(day);
+            if (exercises.length > 0) {
+                const exerciseNames = exercises.map(ex => ex.title).join(', ');
+                tooltip.textContent = exerciseNames;
+            } else {
+                tooltip.textContent = 'No exercises for this day';
+            }
+            
+            dayElement.appendChild(tooltip);
+        }
+        
+        // Add click event listener
+        if (day <= currentDay) {
+            dayElement.addEventListener('click', () => {
+                openDayDetails(day);
+            });
+        }
+        
+        return dayElement;
+    };
+    
+    // Open modal with exercises for a specific day
+    const openDayDetails = (day) => {
+        const exercises = dataManager.getExercisesForDay(day);
+        const modal = document.getElementById('exercise-modal');
+        const modalContent = document.getElementById('modal-content');
+        
+        modalContent.innerHTML = '';
+        
+        // Create header
+        const header = document.createElement('h3');
+        header.textContent = `Day ${day} Exercises`;
+        modalContent.appendChild(header);
+        
+        // Create exercises list
+        if (exercises.length > 0) {
+            exercises.forEach(exercise => {
+                const exerciseCard = createExerciseCard(exercise, true);
+                modalContent.appendChild(exerciseCard);
+            });
+        } else {
+            const noExercises = document.createElement('p');
+            noExercises.textContent = 'No exercises for this day.';
+            modalContent.appendChild(noExercises);
+        }
+        
+        // Add back button
+        const backButton = document.createElement('button');
+        backButton.className = 'back-button';
+        backButton.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Calendar';
+        backButton.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+        modalContent.appendChild(backButton);
+        
+        // Show the modal
+        modal.classList.add('show');
+    };
+    
+    // Create an exercise card for the modal
+    const createExerciseCard = (exercise, isModal = false) => {
+        const card = document.createElement('div');
+        card.className = 'exercise-card';
+        if (storageManager.isExerciseCompleted(exercise.id)) {
+            card.classList.add('completed');
+        }
+        
+        // Exercise header
+        const header = document.createElement('div');
+        header.className = 'exercise-header';
+        
+        const title = document.createElement('div');
+        title.className = 'exercise-title';
+        
+        // Add icon based on exercise type
+        const icon = document.createElement('i');
+        switch (exercise.type) {
+            case 'cardio':
+                icon.className = 'fas fa-heartbeat';
+                break;
+            case 'strength':
+                icon.className = 'fas fa-dumbbell';
+                break;
+            case 'flexibility':
+                icon.className = 'fas fa-child';
+                break;
+            case 'meditation':
+            case 'mental':
+                icon.className = 'fas fa-brain';
+                break;
+            case 'balance':
+                icon.className = 'fas fa-balance-scale';
+                break;
+            case 'breathing':
+                icon.className = 'fas fa-wind';
+                break;
+            default:
+                icon.className = 'fas fa-running';
+        }
+        
+        title.appendChild(icon);
+        title.appendChild(document.createTextNode(exercise.title));
+        header.appendChild(title);
+        
+        const status = document.createElement('div');
+        status.className = 'exercise-status';
+        if (storageManager.isExerciseCompleted(exercise.id)) {
+            status.className += ' status-complete';
+            status.innerHTML = '<span class="checkmark"><i class="fas fa-check"></i></span> Completed';
+        } else {
+            status.className += ' status-incomplete';
+            status.textContent = 'Incomplete';
+        }
+        header.appendChild(status);
+        
+        card.appendChild(header);
+        
+        // Exercise content
+        const content = document.createElement('div');
+        content.className = 'exercise-content';
+        
+        // Exercise details
+        const details = document.createElement('div');
+        details.className = 'exercise-details';
+        
+        const typeBadge = document.createElement('div');
+        typeBadge.className = 'exercise-detail';
+        typeBadge.innerHTML = `<i class="fas fa-tag"></i> ${exercise.type.charAt(0).toUpperCase() + exercise.type.slice(1)}`;
+        details.appendChild(typeBadge);
+        
+        const duration = document.createElement('div');
+        duration.className = 'exercise-detail';
+        duration.innerHTML = `<i class="far fa-clock"></i> ${exercise.duration}`;
+        details.appendChild(duration);
+        
+        const intensity = document.createElement('div');
+        intensity.className = 'exercise-detail';
+        intensity.innerHTML = `<i class="fas fa-signal"></i> ${exercise.intensity} Intensity`;
+        details.appendChild(intensity);
+        
+        content.appendChild(details);
+        
+        // Exercise instructions (truncated for card view)
+        const instructions = document.createElement('div');
+        instructions.className = 'exercise-instructions';
+        if (isModal) {
+            instructions.textContent = exercise.instructions;
+            
+            // Add benefits if in modal view
+            if (exercise.benefits && exercise.benefits.length > 0) {
+                const benefits = document.createElement('div');
+                benefits.className = 'exercise-benefits';
+                
+                const benefitsTitle = document.createElement('h4');
+                benefitsTitle.textContent = 'Benefits';
+                benefits.appendChild(benefitsTitle);
+                
+                const benefitsList = document.createElement('ul');
+                benefitsList.className = 'benefits-list';
+                
+                exercise.benefits.forEach(benefit => {
+                    const item = document.createElement('li');
+                    item.textContent = benefit;
+                    benefitsList.appendChild(item);
+                });
+                
+                benefits.appendChild(benefitsList);
+                content.appendChild(benefits);
+            }
+            
+            // Add modifications if in modal view
+            if (exercise.modifications && exercise.modifications.length > 0) {
+                const modifications = document.createElement('div');
+                modifications.className = 'modifications';
+                
+                const modTitle = document.createElement('h4');
+                modTitle.textContent = 'Modifications';
+                modifications.appendChild(modTitle);
+                
+                exercise.modifications.forEach(mod => {
+                    const modOption = document.createElement('div');
+                    modOption.className = 'modification-option';
+                    
+                    const modName = document.createElement('h5');
+                    modName.textContent = mod.title;
+                    modOption.appendChild(modName);
+                    
+                    const modDesc = document.createElement('p');
+                    modDesc.textContent = mod.description;
+                    modOption.appendChild(modDesc);
+                    
+                    modifications.appendChild(modOption);
+                });
+                
+                content.appendChild(modifications);
+            }
+        } else {
+            // Truncated instructions for card view
+            const truncated = exercise.instructions.length > 100 
+                ? exercise.instructions.substring(0, 100) + '...' 
+                : exercise.instructions;
+            instructions.textContent = truncated;
+        }
+        content.appendChild(instructions);
+        
+        card.appendChild(content);
+        
+        // Only add footer with actions if not in modal
+        if (!isModal) {
+            const footer = document.createElement('div');
+            footer.className = 'exercise-footer';
+            
+            const actions = document.createElement('div');
+            actions.className = 'exercise-actions';
+            
+            const detailsBtn = document.createElement('button');
+            detailsBtn.className = 'btn-exercise details';
+            detailsBtn.textContent = 'Details';
+            detailsBtn.addEventListener('click', () => {
+                showExerciseDetails(exercise);
+            });
+            actions.appendChild(detailsBtn);
+            
+            const completeBtn = document.createElement('button');
+            completeBtn.className = 'btn-exercise complete';
+            completeBtn.textContent = storageManager.isExerciseCompleted(exercise.id) ? 'Completed' : 'Mark Complete';
+            completeBtn.disabled = storageManager.isExerciseCompleted(exercise.id);
+            
+            if (!storageManager.isExerciseCompleted(exercise.id)) {
+                completeBtn.addEventListener('click', () => {
+                    storageManager.completeExercise(exercise.id);
+                    completeBtn.textContent = 'Completed';
+                    completeBtn.disabled = true;
+                    card.classList.add('completed');
+                    status.innerHTML = '<span class="checkmark"><i class="fas fa-check"></i></span> Completed';
+                    status.className = 'exercise-status status-complete';
+                    
+                    // Check if all exercises for the day are completed
+                    checkDayCompletion();
+                });
+            }
+            
+            actions.appendChild(completeBtn);
+            
+            footer.appendChild(actions);
+            card.appendChild(footer);
+        }
+        
+        return card;
+    };
+    
+    // Show detailed view of an exercise
+    const showExerciseDetails = (exercise) => {
+        const modal = document.getElementById('exercise-modal');
+        const modalContent = document.getElementById('modal-content');
+        
+        modalContent.innerHTML = '';
+        
+        // Create exercise card for modal view
+        const exerciseCard = createExerciseCard(exercise, true);
+        modalContent.appendChild(exerciseCard);
+        
+        // Add back button
+        const backButton = document.createElement('button');
+        backButton.className = 'back-button';
+        backButton.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Workout';
+        backButton.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+        modalContent.appendChild(backButton);
+        
+        // Show the modal
+        modal.classList.add('show');
+    };
+    
+    // Check if all exercises for the current day are completed
+    const checkDayCompletion = () => {
+        const userData = storageManager.getUserData();
+        const currentDay = userData.currentDay;
+        const exercises = dataManager.getExercisesForDay(currentDay);
+        
+        const allCompleted = exercises.every(ex => storageManager.isExerciseCompleted(ex.id));
+        
+        if (allCompleted && exercises.length > 0) {
+            // Show completion section
+            document.getElementById('workout-container').classList.add('hidden');
+            document.getElementById('workout-complete').classList.remove('hidden');
+        }
+    };
+    
+    return {
+        renderCalendar,
+        createExerciseCard,
+        showExerciseDetails,
+        checkDayCompletion
+    };
+})();
+
+// Exercises Manager - Handles exercise display and interaction
+const exercisesManager = (() => {
+    // Load exercises for the current day
+    const loadTodayExercises = () => {
+        const userData = storageManager.getUserData();
+        const currentDay = userData.currentDay;
+        const exercises = dataManager.getExercisesForDay(currentDay);
+        
+        const container = document.getElementById('workout-container');
+        // Clear existing content
+        container.innerHTML = '';
+        
+        if (exercises.length === 0) {
+            const message = document.createElement('div');
+            message.className = 'loading';
+            message.textContent = 'No exercises for today. Take a rest day!';
+            container.appendChild(message);
+            return;
+        }
+        
+        // Create exercise cards
+        exercises.forEach(exercise => {
+            const card = calendarManager.createExerciseCard(exercise);
+            container.appendChild(card);
+        });
+        
+        // Check if all exercises are already completed
+        calendarManager.checkDayCompletion();
+    };
+    
+    return {
+        loadTodayExercises
+    };
+})();
+
+// Achievements Manager - Handles achievements and unlocking
+const achievementsManager = (() => {
+    // List of available achievements
+    const achievements = [
+        {
+            id: 'first-day',
+            title: 'First Step',
+            description: 'Complete your first day of exercises',
+            icon: 'fa-shoe-prints',
+            condition: (userData) => userData.completedDays.length > 0
+        },
+        {
+            id: 'first-week',
+            title: 'Solid Foundation',
+            description: 'Complete your first week of exercises',
+            icon: 'fa-calendar-week',
+            condition: (userData) => userData.completedDays.filter(day => day <= 7).length === 7
+        },
+        {
+            id: 'halfway',
+            title: 'Halfway Champion',
+            description: 'Complete 15 days of the program',
+            icon: 'fa-route',
+            condition: (userData) => userData.completedDays.length >= 15
+        },
+        {
+            id: 'completion',
+            title: 'Full Journey',
+            description: 'Complete all 30 days of the program',
+            icon: 'fa-trophy',
+            condition: (userData) => userData.completedDays.length >= 30
+        },
+        {
+            id: 'streak-3',
+            title: 'Momentum Builder',
+            description: 'Achieve a 3-day streak',
+            icon: 'fa-fire',
+            condition: (userData) => userData.currentStreak >= 3 || userData.longestStreak >= 3
+        },
+        {
+            id: 'streak-7',
+            title: 'Habit Former',
+            description: 'Achieve a 7-day streak',
+            icon: 'fa-fire-alt',
+            condition: (userData) => userData.currentStreak >= 7 || userData.longestStreak >= 7
+        },
+        {
+            id: 'streak-14',
+            title: 'Consistency King',
+            description: 'Achieve a 14-day streak',
+            icon: 'fa-crown',
+            condition: (userData) => userData.currentStreak >= 14 || userData.longestStreak >= 14
+        },
+        {
+            id: 'exercises-20',
+            title: 'Exercise Explorer',
+            description: 'Complete 20 different exercises',
+            icon: 'fa-dumbbell',
+            condition: (userData) => userData.completedExercises.length >= 20
+        },
+        {
+            id: 'exercises-50',
+            title: 'Fitness Enthusiast',
+            description: 'Complete 50 exercises',
+            icon: 'fa-heartbeat',
+            condition: (userData) => userData.completedExercises.length >= 50
+        },
+        {
+            id: 'exercises-100',
+            title: 'Fitness Master',
+            description: 'Complete 100 exercises',
+            icon: 'fa-award',
+            condition: (userData) => userData.completedExercises.length >= 100
+        }
+    ];
+    
+    // Check for new achievements
+    const checkAchievements = (userData) => {
+        const newAchievements = [];
+        
+        achievements.forEach(achievement => {
+            // Check if achievement is unlocked and not already in user's achievements
+            if (achievement.condition(userData) && !userData.achievements.includes(achievement.id)) {
+                storageManager.unlockAchievement(achievement.id);
+                newAchievements.push(achievement);
+            }
+        });
+        
+        return newAchievements;
+    };
+    
+    // Render all achievements
+    const renderAchievements = () => {
+        const container = document.getElementById('achievements-container');
+        container.innerHTML = '';
+        
+        const userData = storageManager.getUserData();
+        
+        achievements.forEach(achievement => {
+            const isUnlocked = userData.achievements.includes(achievement.id);
+            
+            const card = document.createElement('div');
+            card.className = `achievement-card ${isUnlocked ? 'unlocked' : 'locked'}`;
+            
+            // Achievement icon
+            const iconContainer = document.createElement('div');
+            iconContainer.className = 'achievement-icon';
+            const icon = document.createElement('i');
+            icon.className = `fas ${achievement.icon}`;
+            iconContainer.appendChild(icon);
+            card.appendChild(iconContainer);
+            
+            // Achievement content
+            const content = document.createElement('div');
+            content.className = 'achievement-content';
+            
+            const title = document.createElement('div');
+            title.className = 'achievement-title';
+            title.textContent = achievement.title;
+            content.appendChild(title);
+            
+            const description = document.createElement('div');
+            description.className = 'achievement-description';
+            description.textContent = achievement.description;
+            content.appendChild(description);
+            
+            if (isUnlocked) {
+                const unlockDate = document.createElement('div');
+                unlockDate.className = 'unlocked-date';
+                unlockDate.textContent = 'Unlocked!';
+                content.appendChild(unlockDate);
+                
+                // Add badge to unlocked achievements
+                const badge = document.createElement('div');
+                badge.className = 'achievement-badge';
+                badge.innerHTML = '<i class="fas fa-check"></i>';
+                card.appendChild(badge);
+            } else {
+                const progressContainer = document.createElement('div');
+                progressContainer.className = 'achievement-progress';
+                progressContainer.textContent = 'Locked';
+                content.appendChild(progressContainer);
+            }
+            
+            card.appendChild(content);
+            container.appendChild(card);
+        });
+    };
+    
+    return {
+        checkAchievements,
+        renderAchievements
+    };
+})();
+
+// UI Manager - Handles general UI interactions
+const uiManager = (() => {
+    // Show confetti animation
+    const createConfetti = () => {
+        const container = document.getElementById('confetti-container');
+        container.innerHTML = '';
+        
+        const colors = ['#1E88E5', '#42A5F5', '#FFA726', '#f44336', '#4caf50'];
+        
+        for (let i = 0; i < 100; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = `${Math.random() * 100}%`;
+            confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
+            confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+            
+            container.appendChild(confetti);
+        }
+    };
+    
+    return {
+        createConfetti
+    };
+})();
+
+// App Initialization - Main app entry point
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize the app
+    const app = {
+        init: function() {
+            this.setupEventListeners();
+            this.setupNavigation();
+            this.loadUserData();
+            this.updateUI();
+        },
+
+        setupEventListeners: function() {
+            // Navigation buttons
+            document.getElementById('today-btn').addEventListener('click', () => this.switchView('today'));
+            document.getElementById('calendar-btn').addEventListener('click', () => this.switchView('calendar'));
+            document.getElementById('progress-btn').addEventListener('click', () => this.switchView('progress'));
+            document.getElementById('achievements-btn').addEventListener('click', () => this.switchView('achievements'));
+
+            // Reset progress button
+            document.getElementById('reset-progress-btn').addEventListener('click', () => {
+                document.getElementById('reset-modal').classList.add('show');
+            });
+            
+            // Reset confirmation
+            document.getElementById('confirm-reset').addEventListener('click', () => {
+                this.resetProgress();
+                document.getElementById('reset-modal').classList.remove('show');
+            });
+            
+            // Cancel reset
+            document.getElementById('cancel-reset').addEventListener('click', () => {
+                document.getElementById('reset-modal').classList.remove('show');
+            });
+            
+            // Mark complete button
+            document.getElementById('mark-complete-btn').addEventListener('click', () => {
+                this.completeDay();
+            });
+            
+            // Close celebration modal
+            document.getElementById('close-celebration').addEventListener('click', () => {
+                document.getElementById('day-complete-modal').classList.remove('show');
+                this.refreshApp();
+            });
+            
+            // Close modals when clicking outside
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Close modal buttons
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btn.closest('.modal').classList.remove('show');
+                });
+            });
+        },
+        
+        setupNavigation: function() {
+            // Initial view
+            this.switchView('today');
+        },
+        
+        switchView: function(viewId) {
+            // Hide all views
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show selected view
+            document.getElementById(viewId).classList.add('active');
+            
+            // Update active navigation button
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`${viewId}-btn`).classList.add('active');
+            
+            // Special handling for each view
+            if (viewId === 'today') {
+                exercisesManager.loadTodayExercises();
+            } else if (viewId === 'calendar') {
+                calendarManager.renderCalendar();
+            } else if (viewId === 'progress') {
+                this.updateProgressView();
+            } else if (viewId === 'achievements') {
+                achievementsManager.renderAchievements();
+            }
+        },
+        
+        loadUserData: function() {
+            // Load user progress from storage
+            const userData = storageManager.getUserData();
+            
+            // Update current day
+            if (userData.currentDay === 0) {
+                // First time user, set to day 1
+                userData.currentDay = 1;
+                storageManager.saveUserData(userData);
+            }
+            
+            // Set current day display
+            document.getElementById('current-day').textContent = `Day ${userData.currentDay}`;
+            
+            // Set streak display
+            document.getElementById('current-streak').textContent = userData.currentStreak;
+            
+            // Load daily quote
+            this.loadDailyQuote();
+        },
+        
+        loadDailyQuote: function() {
+            const quotes = [
+                { quote: "Every small step counts. You're building a new you.", author: "Anonymous" },
+                { quote: "Recovery is not a race. You don't have to feel guilty if it takes you longer than you thought it would.", author: "Anonymous" },
+                { quote: "The best way out is always through.", author: "Robert Frost" },
+                { quote: "Your present circumstances don't determine where you can go; they merely determine where you start.", author: "Nido Qubein" },
+                { quote: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "Ralph Waldo Emerson" },
+                { quote: "The only person you are destined to become is the person you decide to be.", author: "Ralph Waldo Emerson" },
+                { quote: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+                { quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+                { quote: "You don't have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
+                { quote: "When you can't look on the bright side, I will sit with you in the dark.", author: "Alice in Wonderland" },
+                { quote: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
+                { quote: "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.", author: "Rumi" },
+                { quote: "Just for today, I will be happy. This assumes that what Abraham Lincoln said is true, that 'most folks are about as happy as they make up their minds to be.'", author: "NA Just For Today" },
+                { quote: "I am not defined by my relapses, but by my decision to remain in recovery despite them.", author: "Anonymous" },
+                { quote: "Recovery is about progression, not perfection.", author: "Anonymous" }
+            ];
+            
+            // Get a quote based on the day number to ensure it's consistent
+            const userData = storageManager.getUserData();
+            const quoteIndex = (userData.currentDay - 1) % quotes.length;
+            const dailyQuote = quotes[quoteIndex];
+            
+            document.getElementById('daily-quote').textContent = dailyQuote.quote;
+            document.querySelector('.quote-author').textContent = `— ${dailyQuote.author}`;
+        },
+        
+        updateUI: function() {
+            // Check if today's workout is completed
+            const userData = storageManager.getUserData();
+            const todayCompleted = userData.completedDays.includes(userData.currentDay);
+            
+            if (todayCompleted) {
+                document.getElementById('workout-container').classList.add('hidden');
+                document.getElementById('workout-complete').classList.remove('hidden');
+                document.getElementById('mark-complete-btn').disabled = true;
+                document.getElementById('mark-complete-btn').textContent = "Today Completed!";
+            } else {
+                document.getElementById('workout-container').classList.remove('hidden');
+                document.getElementById('workout-complete').classList.add('hidden');
+                document.getElementById('mark-complete-btn').disabled = false;
+                document.getElementById('mark-complete-btn').textContent = "Mark Complete";
+            }
+        },
+        
+        updateProgressView: function() {
+            const userData = storageManager.getUserData();
+            
+            // Update stats
+            document.getElementById('days-completed').textContent = userData.completedDays.length;
+            document.getElementById('longest-streak').textContent = userData.longestStreak;
+            
+            // Calculate total exercises completed
+            let totalExercises = 0;
+            userData.completedDays.forEach(day => {
+                const dayExercises = dataManager.getExercisesForDay(day);
+                totalExercises += dayExercises.length;
+            });
+            document.getElementById('total-exercises').textContent = totalExercises;
+            
+            // Update progress bar
+            const progressPercentage = (userData.completedDays.length / 30) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+            document.getElementById('progress-percentage').textContent = `${Math.round(progressPercentage)}%`;
+            
+            // Update weekly chart
+            this.updateWeeklyChart();
+        },
+        
+        updateWeeklyChart: function() {
+            const chartContainer = document.getElementById('weekly-chart');
+            chartContainer.innerHTML = '';
+            
+            const userData = storageManager.getUserData();
+            const weeks = [
+                { label: 'Week 1', days: [1, 2, 3, 4, 5, 6, 7] },
+                { label: 'Week 2', days: [8, 9, 10, 11, 12, 13, 14] },
+                { label: 'Week 3', days: [15, 16, 17, 18, 19, 20, 21] },
+                { label: 'Week 4', days: [22, 23, 24, 25, 26, 27, 28] },
+                { label: 'Week 5', days: [29, 30] }
+            ];
+            
+            weeks.forEach(week => {
+                const completedInWeek = week.days.filter(day => userData.completedDays.includes(day)).length;
+                const percentage = (completedInWeek / week.days.length) * 100;
+                
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = `${percentage}%`;
+                
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.textContent = week.label;
+                
+                bar.appendChild(label);
+                chartContainer.appendChild(bar);
+            });
+        },
+        
+        completeDay: function() {
+            const userData = storageManager.getUserData();
+            
+            // Mark current day as completed
+            if (!userData.completedDays.includes(userData.currentDay)) {
+                userData.completedDays.push(userData.currentDay);
+                userData.lastCompletedDate = new Date().toISOString().split('T')[0];
+                
+                // Update streak
+                this.updateStreak(userData);
+                
+                // Check for achievements
+                const newAchievements = achievementsManager.checkAchievements(userData);
+                
+                // Save user data
+                storageManager.saveUserData(userData);
+                
+                // Show completion modal
+                this.showCompletionModal(newAchievements);
+                
+                // Create confetti animation
+                uiManager.createConfetti();
+            }
+        },
+        
+        showCompletionModal: function(newAchievements) {
+            const modal = document.getElementById('day-complete-modal');
+            
+            // If there are new achievements, show them
+            if (newAchievements.length > 0) {
+                const achievementAlert = document.getElementById('achievement-unlocked');
+                const achievementContent = document.getElementById('new-achievement-content');
+                
+                achievementAlert.classList.remove('hidden');
+                achievementContent.innerHTML = '';
+                
+                newAchievements.forEach(achievement => {
+                    const achievementElement = document.createElement('div');
+                    achievementElement.className = 'new-achievement';
+                    achievementElement.innerHTML = `
+                        <h5>${achievement.title}</h5>
+                        <p>${achievement.description}</p>
+                    `;
+                    achievementContent.appendChild(achievementElement);
+                });
+            } else {
+                document.getElementById('achievement-unlocked').classList.add('hidden');
+            }
+            
+            modal.classList.add('show');
+        },
+        
+        updateStreak: function(userData) {
+            // Get yesterday's date
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
+            
+            // If last completed was yesterday or this is the first completion, increase streak
+            if (userData.lastCompletedDate === yesterdayStr || userData.currentStreak === 0) {
+                userData.currentStreak++;
+                
+                // Update longest streak if current is higher
+                if (userData.currentStreak > userData.longestStreak) {
+                    userData.longestStreak = userData.currentStreak;
+                }
+            } else if (userData.lastCompletedDate !== new Date().toISOString().split('T')[0]) {
+                // If last completed wasn't yesterday and wasn't today, reset streak to 1
+                userData.currentStreak = 1;
+            }
+        },
+        
+        refreshApp: function() {
+            // Check if all exercises of current day are done
+            const userData = storageManager.getUserData();
+            
+            // If this is the last day, show a congratulations
+            if (userData.currentDay === 30 && userData.completedDays.includes(30)) {
+                alert('Congratulations on completing the 30-day program! You can restart the program or continue maintaining your wellness journey!');
+            } else if (userData.completedDays.includes(userData.currentDay)) {
+                // Move to next day
+                userData.currentDay++;
+                storageManager.saveUserData(userData);
+                
+                // Reload user data
+                this.loadUserData();
+                
+                // Update UI
+                this.updateUI();
+                
+                // Refresh exercises for new day
+                exercisesManager.loadTodayExercises();
+            }
+        },
+        
+        resetProgress: function() {
+            if (confirm('Are you sure you want to reset your progress? This cannot be undone.')) {
+                storageManager.resetUserData();
+                
+                // Reload app
+                window.location.reload();
+            }
+        }
+    };
+    
+    // Initialize the app
+    app.init();
+});
+    </script>
+</body>
+</html>
