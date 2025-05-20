@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30-Day Sobriety Guide</title>
+    
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            padding: 15px;
+            max-width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #4a90e2;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .intro {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .progress-container {
+            height: 20px;
+            background-color: #eee;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            font-size: 12px;
+            transition: width 0.3s;
+        }
+        
+        .day-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+        
+        .day-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        
+        .day-btn.completed {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+        
+        .day-btn.active {
+            background-color: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+        
+        .day-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .day-content {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .day-content.active {
+            display: block;
+        }
+        
+        .day-content h2 {
+            color: #4a90e2;
+            font-size: 18px;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .day-content h3 {
+            color: #666;
+            font-size: 16px;
+            margin: 15px 0 10px;
+        }
+        
+        .day-content ul {
+            padding-left: 25px;
+        }
+        
+        .day-content li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .affirmation {
+            font-style: italic;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 3px solid #4a90e2;
+            font-weight: bold;
+        }
+        
+        .action-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: #4a90e2;
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .completion-message {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .reset-section {
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .admin-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 12px;
+        }
+        
+        .admin-link a {
+            color: #999;
+            text-decoration: none;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 100;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .admin-panel {
+            display: none;
+        }
+        
+        .admin-panel h2 {
+            color: #4a90e2;
+            font-size: 20px;
+            margin-top: 0;
+        }
+        
+        .stats-container {
+            margin: 15px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .login-form input {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .login-form button {
+            padding: 10px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .week-header {
+            background-color: #e9f2ff;
+            padding: 10px;
+            margin: 15px 0 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>30-Day Sobriety Survival Guide</h1>
+            <p>A Practical Approach to Your First 30 Days of Sobriety</p>
+        </div>
+        
+        <div class="intro">
+            <p>Welcome to the 30-Day Sobriety Survival Guide. Whether you're beginning your sobriety journey for the first time or looking for a fresh start, this guide provides you with a roadmap for your first month. Sobriety is more than just abstaining from substances; it's about rebuilding your life with a new sense of purpose and integrity.</p>
+            <p>Each day offers actionable steps, affirmations, and tools to support your recovery. One day at a time—let's embark on this transformation.</p>
+        </div>
+        
+        <div class="progress-container">
+            <div id="progress-bar" class="progress-bar" style="width: 0%">0%</div>
+        </div>
+        
+        <div id="day-nav" class="day-nav">
+            <!-- Day buttons will be generated by JS -->
+        </div>
+        
+        <!-- Day 1 Content -->
+        <div id="day-1" class="day-content active">
+            <div class="week-header">Week 1: Setting the Stage</div>
+            <h2>Day 1: Commitment & Mindset Shift</h2>
+            <h3>Goal: Commit to your recovery with intention.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Write down your reasons for wanting sobriety. Be brutally honest.</li>
+                <li>Cleanse your environment—remove triggers and substances.</li>
+                <li>Reach out to a support network: a friend, group, or sponsor.</li>
+                <li>Schedule a daily check-in time to reflect.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I choose sobriety today and every day."</p>
+        </div>
+        
+        <!-- Day 2 Content -->
+        <div id="day-2" class="day-content">
+            <h2>Day 2: Build Your Support Team</h2>
+            <h3>Goal: Surround yourself with accountability and understanding.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Join a recovery group (online or in-person).</li>
+                <li>Find an accountability partner to stay connected.</li>
+                <li>Create a list of sober contacts for emergencies.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I have a support system that helps me succeed."</p>
+        </div>
+        
+        <!-- Day 3 Content -->
+        <div id="day-3" class="day-content">
+            <h2>Day 3: Establish New Routines</h2>
+            <h3>Goal: Start replacing old habits with healthy routines.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Set a regular sleep schedule and stick to it.</li>
+                <li>Plan and prep your meals with nutrition in mind.</li>
+                <li>Incorporate gentle movement (yoga, stretching, walking).</li>
+            </ul>
+            <p class="affirmation">Affirmation: "Every small change I make builds a better me."</p>
+        </div>
+        
+        <!-- Day 4 Content -->
+        <div id="day-4" class="day-content">
+            <h2>Day 4: Recognizing Triggers & Temptations</h2>
+            <h3>Goal: Understand what causes cravings and how to handle them.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Identify triggers (places, people, feelings).</li>
+                <li>Develop alternative coping strategies (breathing, talking, journaling).</li>
+                <li>Practice saying "no" to temptations when they arise.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am in control of my responses and actions."</p>
+        </div>
+        
+        <!-- Day 5 Content -->
+        <div id="day-5" class="day-content">
+            <h2>Day 5: Nutrition and Hydration</h2>
+            <h3>Goal: Nourish your body to enhance mental clarity.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Eat balanced meals with lean proteins, fruits, and vegetables.</li>
+                <li>Hydrate with at least 8 cups of water throughout the day.</li>
+                <li>Limit caffeine and sugar intake to reduce mood swings.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I nourish my body to support my healing."</p>
+        </div>
+        
+        <!-- Day 6 Content -->
+        <div id="day-6" class="day-content">
+            <h2>Day 6: Self-Care & Stress Reduction</h2>
+            <h3>Goal: Prioritize your emotional and mental well-being.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Spend 5–10 minutes meditating or practicing deep breathing.</li>
+                <li>Take time for self-care (bath, walk, time in nature).</li>
+                <li>Do something fun or relaxing to recharge.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I deserve time to rest and refresh."</p>
+        </div>
+        
+        <!-- Day 7 Content -->
+        <div id="day-7" class="day-content">
+            <h2>Day 7: Reflect on Your First Week</h2>
+            <h3>Goal: Celebrate your progress and set new intentions.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Journal about your week: what went well, what challenged you.</li>
+                <li>Celebrate 7 days of sobriety with a non-alcoholic reward.</li>
+                <li>Set new goals for the coming week.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am proud of the progress I've made."</p>
+        </div>
+        
+        <!-- Day 8 Content -->
+        <div id="day-8" class="day-content">
+            <div class="week-header">Week 2: Strengthening Your Commitment</div>
+            <h2>Day 8: Managing Cravings</h2>
+            <h3>Goal: Learn techniques to overcome cravings effectively.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Try the "urge surfing" technique—acknowledge the craving and let it pass.</li>
+                <li>Distract yourself with a positive activity (walk, call a friend, read).</li>
+                <li>Reach out to your support team when cravings strike.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "Cravings are temporary. My commitment to sobriety is permanent."</p>
+        </div>
+        
+        <!-- Day 9 Content -->
+        <div id="day-9" class="day-content">
+            <h2>Day 9: Breaking Destructive Patterns</h2>
+            <h3>Goal: Replace old habits with healthier alternatives.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>List 3 unhealthy habits and choose positive replacements.</li>
+                <li>Start a gratitude journal—write 3 things you are thankful for.</li>
+                <li>Create an action plan for keeping destructive habits at bay.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I actively choose the healthy, fulfilling life I deserve."</p>
+        </div>
+        
+        <!-- Day 10 Content -->
+        <div id="day-10" class="day-content">
+            <h2>Day 10: Healing Through Movement</h2>
+            <h3>Goal: Use physical activity to strengthen mind and body.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Engage in a movement practice: walk, dance, stretch, or yoga.</li>
+                <li>Pay attention to how your mood shifts after movement.</li>
+                <li>Set a small fitness goal for the week.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "Physical movement lifts my spirit and strengthens my resolve."</p>
+        </div>
+        
+        <!-- Day 11 Content -->
+        <div id="day-11" class="day-content">
+            <h2>Day 11: Emotional Awareness</h2>
+            <h3>Goal: Process emotions without turning to substances.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Reflect on and journal about your emotions.</li>
+                <li>Use emotional processing techniques like R.A.I.N. (Recognize, Accept, Investigate, Nurture).</li>
+                <li>Talk with a trusted person about your emotional state.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I allow myself to feel my emotions fully and without judgment."</p>
+        </div>
+        
+        <!-- Day 12 Content -->
+        <div id="day-12" class="day-content">
+            <h2>Day 12: Finding Healthy Distractions</h2>
+            <h3>Goal: Avoid boredom by engaging in fulfilling activities.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Pick up a hobby or explore a new interest.</li>
+                <li>Do something creative (painting, writing, music).</li>
+                <li>Plan a substance-free social event (book club, hiking, etc.).</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I fill my life with enriching and joyful activities."</p>
+        </div>
+        
+        <!-- Day 13 Content -->
+        <div id="day-13" class="day-content">
+            <h2>Day 13: Letting Go of Shame</h2>
+            <h3>Goal: Release guilt and focus on self-forgiveness.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Write a letter forgiving yourself for past mistakes (you don't need to send it).</li>
+                <li>Have a conversation about guilt with someone you trust.</li>
+                <li>Remind yourself that recovery is about progress, not perfection.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I forgive myself and embrace the future with open arms."</p>
+        </div>
+        
+        <!-- Day 14 Content -->
+        <div id="day-14" class="day-content">
+            <h2>Day 14: Two-Week Reflection</h2>
+            <h3>Goal: Celebrate your growth and stay committed.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Reflect on the changes in your physical, mental, and emotional state.</li>
+                <li>Reward yourself for reaching 14 days sober.</li>
+                <li>Set intentions for the next two weeks of recovery.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I honor my growth and look forward to more."</p>
+        </div>
+        
+        <!-- Day 15 Content -->
+        <div id="day-15" class="day-content">
+            <div class="week-header">Week 3: Deepening Your Recovery</div>
+            <h2>Day 15: Healthy Socializing</h2>
+            <h3>Goal: Learn to socialize without substances.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Plan a sober activity with a friend or group.</li>
+                <li>Set clear boundaries with people who might not respect your sobriety.</li>
+                <li>Prepare a response for when you're offered substances.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I choose to build relationships that honor my sobriety."</p>
+        </div>
+        
+        <!-- Day 16 Content -->
+        <div id="day-16" class="day-content">
+            <h2>Day 16: Managing Cravings with Mindfulness</h2>
+            <h3>Goal: Learn to sit with cravings instead of reacting impulsively.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>When cravings arise, take a pause and identify the underlying emotion.</li>
+                <li>Practice the "5-Minute Rule"—delay acting on the craving for 5 minutes while distracting yourself.</li>
+                <li>Engage in a healthy activity such as a walk, deep breathing, or journaling.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "Cravings may come, but I have the strength to overcome them."</p>
+        </div>
+        
+        <!-- Day 17 Content -->
+        <div id="day-17" class="day-content">
+            <h2>Day 17: Process Your Emotions</h2>
+            <h3>Goal: Develop emotional awareness and healthy expression.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Identify one challenging emotion you've been avoiding and write about it.</li>
+                <li>Find a healthy outlet to express your emotions—art, music, talking with a friend, or exercise.</li>
+                <li>Remember that healing is a process, and self-compassion is key.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I honor my emotions and let them guide me to growth."</p>
+        </div>
+        
+        <!-- Day 18 Content -->
+        <div id="day-18" class="day-content">
+            <h2>Day 18: Prioritize Sleep Hygiene</h2>
+            <h3>Goal: Improve sleep quality to aid recovery.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Set a consistent bedtime and wake-up schedule.</li>
+                <li>Avoid screens and stimulants such as caffeine an hour before bed.</li>
+                <li>Try relaxation techniques like meditation or reading to unwind.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "Rest restores me and prepares me for the challenges ahead."</p>
+        </div>
+        
+        <!-- Day 19 Content -->
+        <div id="day-19" class="day-content">
+            <h2>Day 19: Financial Wellness & Stability</h2>
+            <h3>Goal: Take control of your finances as part of your recovery.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Review your spending habits and create a simple, realistic budget.</li>
+                <li>Identify areas to cut back on unnecessary spending.</li>
+                <li>Set a financial goal for the next 30 days (saving a set amount, paying off a bill, etc.).</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am building a financially stable future, one step at a time."</p>
+        </div>
+        
+        <!-- Day 20 Content -->
+        <div id="day-20" class="day-content">
+            <h2>Day 20: Long-Term Vision for Sobriety</h2>
+            <h3>Goal: Envision a future beyond the first 30 days of sobriety.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Write down where you want to be in 3, 6, and 12 months.</li>
+                <li>Identify areas of your life you'd like to improve: health, career, relationships.</li>
+                <li>Set one new goal that aligns with your vision for the future.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am building a future that I can be proud of, and I'm on the path to it."</p>
+        </div>
+        
+        <!-- Day 21 Content -->
+        <div id="day-21" class="day-content">
+            <h2>Day 21: Celebrate Your Progress</h2>
+            <h3>Goal: Take a moment to acknowledge your growth.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Reflect on how far you've come since you started. What positive changes have you made?</li>
+                <li>Treat yourself to something special—a favorite activity, book, or meal.</li>
+                <li>Share your journey with someone who has supported you along the way.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am proud of how far I've come, and I'm excited for the future ahead."</p>
+        </div>
+        
+        <!-- Day 22 Content -->
+        <div id="day-22" class="day-content">
+            <div class="week-header">Week 4: Rebuilding & Thriving</div>
+            <h2>Day 22: Discover Your Purpose Beyond Sobriety</h2>
+            <h3>Goal: Reconnect with passions and explore new goals.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Think about activities that excite or inspire you, and make time for them.</li>
+                <li>Revisit hobbies you enjoyed before addiction, or discover new ones.</li>
+                <li>Consider volunteering or engaging with others who are on a similar journey.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am more than my past; I am building a meaningful life."</p>
+        </div>
+        
+        <!-- Day 23 Content -->
+        <div id="day-23" class="day-content">
+            <h2>Day 23: Strengthen Your Boundaries</h2>
+            <h3>Goal: Establish and enforce healthy boundaries to protect your sobriety.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Identify any relationships or environments that could jeopardize your recovery.</li>
+                <li>Practice setting clear and firm boundaries with people who don't respect your sobriety.</li>
+                <li>List safe spaces and supportive people who can help you maintain your recovery.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I respect my boundaries, and they are vital to my well-being."</p>
+        </div>
+        
+        <!-- Day 24 Content -->
+        <div id="day-24" class="day-content">
+            <h2>Day 24: Manage Stress Without Substances</h2>
+            <h3>Goal: Learn new ways to cope with stress without reverting to old habits.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Identify your biggest sources of stress and create an action plan for handling them.</li>
+                <li>Build a "stress relief toolkit" that includes healthy activities like deep breathing, exercise, or journaling.</li>
+                <li>Practice calm responses to stressors and embrace healthier outlets.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am calm, collected, and in control of my stress."</p>
+        </div>
+        
+        <!-- Day 25 Content -->
+        <div id="day-25" class="day-content">
+            <h2>Day 25: Repair Relationships Affected by Addiction</h2>
+            <h3>Goal: Rebuild relationships with those you've hurt during your addiction.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Write an apology letter to someone you may have wronged (you don't have to send it, just express your feelings).</li>
+                <li>Start small, rebuilding trust with family and close friends through consistent actions.</li>
+                <li>Understand that some relationships may be beyond repair—and accept that.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am healing the relationships that matter most to me."</p>
+        </div>
+        
+        <!-- Day 26 Content -->
+        <div id="day-26" class="day-content">
+            <h2>Day 26: Expand Your Sober Community</h2>
+            <h3>Goal: Surround yourself with others who support your journey.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Attend a new meeting or join a different recovery group.</li>
+                <li>Engage in sober activities, such as hiking, book clubs, or fitness groups.</li>
+                <li>Offer support to someone else in recovery.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am part of a strong, supportive community, and we grow together."</p>
+        </div>
+        
+        <!-- Day 27 Content -->
+        <div id="day-27" class="day-content">
+            <h2>Day 27: Reflect on Your Emotional Growth</h2>
+            <h3>Goal: Recognize and appreciate your emotional healing.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Reflect on how you feel now compared to Day 1—what has improved emotionally?</li>
+                <li>Identify any negative thought patterns that have shifted, and acknowledge your progress.</li>
+                <li>Choose one area of emotional growth to focus on in the next phase of your recovery.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am stronger and wiser emotionally, each and every day."</p>
+        </div>
+        
+        <!-- Day 28 Content -->
+        <div id="day-28" class="day-content">
+            <h2>Day 28: Set New Goals for the Next 30 Days</h2>
+            <h3>Goal: Keep progressing and plan for your next phase of sobriety.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Set three new goals for the next 30 days, focusing on growth and stability.</li>
+                <li>Identify potential obstacles and plan ahead to handle them.</li>
+                <li>Make a plan for celebrating your 60-day milestone.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am committed to long-term success and steady progress."</p>
+        </div>
+        
+        <!-- Day 29 Content -->
+        <div id="day-29" class="day-content">
+            <h2>Day 29: Show Gratitude and Give Back</h2>
+            <h3>Goal: Strengthen your recovery by helping others.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Share your story with someone who is just starting their recovery journey.</li>
+                <li>Volunteer your time or resources to a recovery group or individual in need.</li>
+                <li>Take a moment to express gratitude for the people who have supported you along the way.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "I am grateful for my journey, and I share my strength with others."</p>
+        </div>
+        
+        <!-- Day 30 Content -->
+        <div id="day-30" class="day-content">
+            <h2>Day 30: Celebrate Your Success & Look Ahead</h2>
+            <h3>Goal: Acknowledge your achievement and commit to continued growth.</h3>
+            <h3>Action Steps:</h3>
+            <ul>
+                <li>Celebrate completing 30 days of sobriety with something meaningful to you—whether it's a treat, a trip, or a special activity.</li>
+                <li>Reflect on your biggest lesson from this 30-day journey.</li>
+                <li>Commit to another 30 days of sobriety and beyond.</li>
+            </ul>
+            <p class="affirmation">Affirmation: "This is just the beginning of my new life. I am unstoppable."</p>
+        </div>
+        
+        <div class="action-btns">
+            <button onclick="prevDay()" class="btn btn-primary">Previous Day</button>
+            <button onclick="markComplete()" class="btn btn-success" id="complete-btn">Mark as Completed</button>
+            <button onclick="nextDay()" class="btn btn-primary">Next Day</button>
+        </div>
+        
+        <div id="completion-message" class="completion-message">
+            <h2>Congratulations on Completing Your 30 Days!</h2>
+            <p>This is a significant achievement. Now, keep going. With every new day, you're building a stronger foundation for a healthier, happier future. Your best life is ahead of you. Keep taking it one day at a time.</p>
+        </div>
+        
+        <div id="reset-section" class="reset-section">
+            <p>If you'd like to restart your journey, you can reset your progress:</p>
+            <button onclick="resetProgress()" class="btn btn-danger">Reset Progress</button>
+        </div>
+        
+        <div class="admin-link">
+            <a href="#" onclick="showAdminLogin(); return false;">admin</a>
+        </div>
+    </div>
+    
+    <!-- Admin Login Modal -->
+    <div id="admin-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            
+            <div id="login-section">
+                <h2>Admin Login</h2>
+                <div class="login-form">
+                    <input type="password" id="admin-password" placeholder="Enter password">
+                    <button onclick="loginAdmin()">Login</button>
+                </div>
+            </div>
+            
+            <div id="admin-panel" class="admin-panel">
+    <h2>Admin Dashboard</h2>
+    <p>User Completion Statistics:</p>
+    
+    <div class="stats-container" id="stats-container">
+        <!-- Stats will be populated here -->
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+        <button onclick="resetAdminStats()" class="btn btn-danger">Reset Statistics</button>
+        <button onclick="closeModal()" class="btn btn-primary">Close</button>
+    </div>
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Constants
+        var ADMIN_PASSWORD = "admin123";
+        var totalDays = 30;
+        
+        // Variables for tracking progress
+        var currentDay = 1;
+        var maxDay = 1;
+        var completedDays = {};
+        
+        // Store daily stats for admin panel
+        var dayStats = {};
+        for(var i = 1; i <= totalDays; i++) {
+            dayStats[i] = 0;
+        }
+        
+        // Initialize
+        function initialize() {
+            // Try to load progress from localStorage
+            try {
+                var savedProgress = localStorage.getItem('sobrietyProgress');
+                if(savedProgress) {
+                    var progress = JSON.parse(savedProgress);
+                    completedDays = progress.completedDays || {};
+                    maxDay = progress.maxDay || 1;
+                    currentDay = progress.currentDay || 1;
+                }
+                
+                // Load stats for admin
+                var savedStats = localStorage.getItem('sobrietyStats');
+                if(savedStats) {
+                    dayStats = JSON.parse(savedStats);
+                }
+            } catch(e) {
+                console.log("Error loading data from localStorage");
+            }
+            
+            // Create day navigation
+            createDayNav();
+            
+            // Update the UI
+            updateUI();
+        }
+        
+        // Create day navigation buttons
+        function createDayNav() {
+            var dayNav = document.getElementById('day-nav');
+            dayNav.innerHTML = '';
+            
+            for(var i = 1; i <= totalDays; i++) {
+                var dayBtn = document.createElement('div');
+                dayBtn.textContent = i;
+                dayBtn.className = 'day-btn';
+                
+                if(i > maxDay) {
+                    dayBtn.className += ' disabled';
+                } else {
+                    dayBtn.setAttribute('onclick', 'showDay(' + i + ')');
+                }
+                
+                dayNav.appendChild(dayBtn);
+            }
+        }
+        
+        // Show specific day
+        function showDay(day) {
+            if(day > maxDay) return;
+            
+            // Hide all days
+            var allDays = document.querySelectorAll('.day-content');
+            for(var i = 0; i < allDays.length; i++) {
+                allDays[i].classList.remove('active');
+            }
+            
+            // Show selected day
+            var dayContent = document.getElementById('day-' + day);
+            if(dayContent) {
+                dayContent.classList.add('active');
+                currentDay = day;
+                saveProgress();
+                updateUI();
+            }
+        }
+        
+        // Previous day button
+        function prevDay() {
+            if(currentDay > 1) {
+                showDay(currentDay - 1);
+            }
+        }
+        
+        // Next day button
+        function nextDay() {
+            if(currentDay < totalDays && currentDay < maxDay) {
+                showDay(currentDay + 1);
+            }
+        }
+        
+        // Mark current day complete
+        function markComplete() {
+            completedDays[currentDay] = true;
+            
+            // Update stats for admin
+            dayStats[currentDay] = (dayStats[currentDay] || 0) + 1;
+            
+            // Save stats
+            try {
+                localStorage.setItem('sobrietyStats', JSON.stringify(dayStats));
+            } catch(e) {
+                console.log("Error saving stats");
+            }
+            
+            // Unlock next day if current day is the max day reached
+            if(currentDay === maxDay && maxDay < totalDays) {
+                maxDay++;
+                createDayNav(); // Recreate day nav to update disabled state
+            }
+            
+            saveProgress();
+            updateUI();
+        }
+        
+        // Save progress to localStorage
+        function saveProgress() {
+            try {
+                var progress = {
+                    completedDays: completedDays,
+                    maxDay: maxDay,
+                    currentDay: currentDay
+                };
+                
+                localStorage.setItem('sobrietyProgress', JSON.stringify(progress));
+            } catch(e) {
+                console.log("Error saving progress");
+            }
+        }
+        
+        // Reset progress
+        function resetProgress() {
+            // Count completed days to check if all are completed
+            var count = 0;
+            for(var i = 1; i <= totalDays; i++) {
+                if(completedDays[i]) {
+                    count++;
+                }
+            }
+            
+            // Only allow reset if all days are completed
+            if(count < totalDays) {
+                alert("You need to complete all 30 days before resetting your progress.");
+                return;
+            }
+            
+            // Confirm reset
+            if(confirm("Are you sure you want to reset all progress? This cannot be undone.")) {
+                completedDays = {};
+                maxDay = 1;
+                currentDay = 1;
+                
+                saveProgress();
+                createDayNav();
+                showDay(1);
+                updateUI();
+            }
+        }
+        
+        // Update UI based on current state
+        function updateUI() {
+            // Update day navigation
+            var dayBtns = document.querySelectorAll('.day-btn');
+            for(var i = 0; i < dayBtns.length; i++) {
+                var day = i + 1;
+                
+                // Reset classes
+                dayBtns[i].className = 'day-btn';
+                
+                // Mark completed
+                if(completedDays[day]) {
+                    dayBtns[i].className += ' completed';
+                }
+                
+                // Mark active
+                if(day === currentDay) {
+                    dayBtns[i].className += ' active';
+                }
+                
+                // Mark disabled
+                if(day > maxDay) {
+                    dayBtns[i].className += ' disabled';
+                }
+            }
+            
+            // Update progress bar
+            var completedCount = 0;
+            for(var i = 1; i <= totalDays; i++) {
+                if(completedDays[i]) {
+                    completedCount++;
+                }
+            }
+            
+            var percentage = Math.round((completedCount / totalDays) * 100);
+            var progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '%';
+            
+            // Update complete button
+            var completeBtn = document.getElementById('complete-btn');
+            if(completedDays[currentDay]) {
+                completeBtn.textContent = 'Completed ✓';
+                completeBtn.disabled = true;
+            } else {
+                completeBtn.textContent = 'Mark as Completed';
+                completeBtn.disabled = false;
+            }
+            
+            // Show/hide completion message and reset button
+            if(completedCount === totalDays) {
+                document.getElementById('completion-message').style.display = 'block';
+                document.getElementById('reset-section').style.display = 'block';
+            } else {
+                document.getElementById('completion-message').style.display = 'none';
+                document.getElementById('reset-section').style.display = 'none';
+            }
+        }
+        
+        // Admin Functions
+        function showAdminLogin() {
+            var modal = document.getElementById('admin-modal');
+            var loginSection = document.getElementById('login-section');
+            var adminPanel = document.getElementById('admin-panel');
+            
+            modal.style.display = 'block';
+            loginSection.style.display = 'block';
+            adminPanel.style.display = 'none';
+            
+            document.getElementById('admin-password').value = '';
+        }
+        
+        function resetAdminStats() {
+    if (confirm("Are you sure you want to reset all admin statistics? This cannot be undone.")) {
+        // Reset all day stats to zero
+        dayStats = {};
+        for(var i = 1; i <= totalDays; i++) {
+            dayStats[i] = 0;
+        }
+        
+        // Save to localStorage
+        try {
+            localStorage.setItem('sobrietyStats', JSON.stringify(dayStats));
+        } catch(e) {
+            console.log("Error saving stats");
+        }
+        
+        // Update the admin panel
+        updateAdminStats();
+        
+        alert("Admin statistics have been reset successfully.");
+    }
+}
+
+        function closeModal() {
+            document.getElementById('admin-modal').style.display = 'none';
+        }
+        
+        function loginAdmin() {
+            var password = document.getElementById('admin-password').value;
+            
+            if(password === ADMIN_PASSWORD) {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                
+                // Update stats display
+                updateAdminStats();
+            } else {
+                alert("Incorrect password");
+            }
+        }
+        
+        function updateAdminStats() {
+            var statsContainer = document.getElementById('stats-container');
+            statsContainer.innerHTML = '';
+            
+            // Count total users who have at least started
+            var totalUsers = 0;
+            for(var i = 1; i <= totalDays; i++) {
+                if(dayStats[i] > 0) {
+                    totalUsers = Math.max(totalUsers, dayStats[i]);
+                }
+            }
+            
+            // Add total users stat
+            var totalStat = document.createElement('div');
+            totalStat.className = 'stat-item';
+            totalStat.innerHTML = '<strong>Total Users:</strong> <span>' + totalUsers + '</span>';
+            statsContainer.appendChild(totalStat);
+            
+            // Add completion percentage
+            var day30Count = dayStats[30] || 0;
+            var completionPercentage = totalUsers > 0 ? Math.round((day30Count / totalUsers) * 100) : 0;
+            
+            var completionStat = document.createElement('div');
+            completionStat.className = 'stat-item';
+            completionStat.innerHTML = '<strong>Completion Rate:</strong> <span>' + completionPercentage + '%</span>';
+            statsContainer.appendChild(completionStat);
+            
+            // Add separator
+            var separator = document.createElement('hr');
+            statsContainer.appendChild(separator);
+            
+            // Add day-by-day stats
+            for(var i = 1; i <= totalDays; i++) {
+                var statItem = document.createElement('div');
+                statItem.className = 'stat-item';
+                
+                var count = dayStats[i] || 0;
+                var percentage = totalUsers > 0 ? Math.round((count / totalUsers) * 100) : 0;
+                
+                statItem.innerHTML = '<span>Day ' + i + ':</span> <span>' + count + ' users (' + percentage + '%)</span>';
+                statsContainer.appendChild(statItem);
+            }
+        }
+        
+        // Initialize on page load
+        window.onload = initialize;
+    </script>
+</body>
+</html>
