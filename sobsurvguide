@@ -284,6 +284,54 @@
             font-weight: bold;
             color: #4a90e2;
         }
+        
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .intro,
+        body.dark-mode .day-content,
+        body.dark-mode .modal-content {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .week-header {
+            background-color: #2a2a2a;
+            color: #90caf9;
+        }
+
+        body.dark-mode .btn-primary {
+            background-color: #1976d2;
+        }
+
+        body.dark-mode .btn-success {
+            background-color: #388e3c;
+        }
+
+        body.dark-mode .btn-danger {
+            background-color: #d32f2f;
+        }
+
+        body.dark-mode .day-btn {
+            background-color: #2c2c2c;
+            color: #ccc;
+            border-color: #444;
+        }
+
+        body.dark-mode .day-btn.completed {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        body.dark-mode .day-btn.active {
+            background-color: #2196F3;
+            color: white;
+            border-color: #2196F3;
+        }
+        
     </style>
 </head>
 <body>
@@ -291,6 +339,12 @@
         <div class="header">
             <h1>30-Day Sobriety Survival Guide</h1>
             <p>A Practical Approach to Your First 30 Days of Sobriety</p>
+            
+            <div style="margin-top: 10px;">
+                <label style="font-size: 14px;">
+                    <input type="checkbox" id="dark-toggle" onchange="toggleDarkMode()"> Dark Mode
+                </label>
+            </div>
         </div>
         
         <div class="intro">
@@ -1073,8 +1127,23 @@
             }
         }
         
-        // Initialize on page load
-        window.onload = initialize;
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+
+            // Save preference
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        // Load dark mode if user had it enabled before
+        window.onload = function () {
+            initialize();
+    
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                document.getElementById('dark-toggle').checked = true;
+            }
+        }
     </script>
 </body>
 </html>
