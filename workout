@@ -1093,6 +1093,17 @@ footer {
     .achievements-container {
         grid-template-columns: 1fr;
     }
+    
+    .warning-alert {
+        background-color: rgba(255, 193, 7, 0.15);
+        border-left: 4px solid #ffc107;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-size: 0.95rem;
+        color: #856404;
+        border-radius: 8px;
+        box-shadow: var(--box-shadow);
+    }
 }
     </style>
 </head>
@@ -1129,6 +1140,10 @@ footer {
                     <p id="daily-quote">Every moment is a fresh beginning.</p>
                     <p class="quote-author">— T.S. Eliot</p>
                 </div>
+                
+                <div class="warning-alert">
+    <strong>Heads up:</strong> Your progress is saved only on this device. Clearing your app data or cache will reset your streak and completed days.
+</div>
 
                 <div id="workout-container" class="workout-container">
                     <!-- Exercise content will be loaded here -->
