@@ -1115,13 +1115,33 @@ footer {
         </header>
 
         <nav>
-            <ul>
-                <li><button id="today-btn" class="nav-btn active"><i class="fas fa-calendar-day"></i> Today</button></li>
-                <li><button id="calendar-btn" class="nav-btn"><i class="fas fa-calendar-alt"></i> Calendar</button></li>
-                <li><button id="progress-btn" class="nav-btn"><i class="fas fa-chart-line"></i> Progress</button></li>
-                <li><button id="achievements-btn" class="nav-btn"><i class="fas fa-medal"></i> Achievements</button></li>
-            </ul>
-        </nav>
+  <ul>
+    <li>
+      <button id="today-btn" class="nav-btn active" aria-label="Today view">
+        <i class="fas fa-calendar-day" aria-hidden="true"></i>
+        Today
+      </button>
+    </li>
+    <li>
+      <button id="calendar-btn" class="nav-btn" aria-label="Calendar view">
+        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+        Calendar
+      </button>
+    </li>
+    <li>
+      <button id="progress-btn" class="nav-btn" aria-label="Progress view">
+        <i class="fas fa-chart-line" aria-hidden="true"></i>
+        Progress
+      </button>
+    </li>
+    <li>
+      <button id="achievements-btn" class="nav-btn" aria-label="Achievements view">
+        <i class="fas fa-medal" aria-hidden="true"></i>
+        Achievements
+      </button>
+    </li>
+  </ul>
+</nav>
 
         <main>
             <!-- Today's workout view -->
@@ -1141,8 +1161,9 @@ footer {
                     <p class="quote-author">— T.S. Eliot</p>
                 </div>
                 
-                <div class="warning-alert">
+         <div class="warning-alert" id="local-storage-warning">
     <strong>Heads up:</strong> Your progress is saved only on this device. Clearing your app data or cache will reset your streak and completed days.
+    <button class="btn-small" onclick="document.getElementById('local-storage-warning').style.display='none';" style="margin-left: 10px;">Dismiss</button>
 </div>
 
                 <div id="workout-container" class="workout-container">
@@ -1220,15 +1241,18 @@ footer {
             </section>
         </main>
 
-        <footer>
-            <p>Keep going, you're doing amazing! 🌟</p>
-            <button id="reset-progress-btn" class="btn-small">Reset Progress</button>
-        </footer>
+<footer>
+    <p>Keep going, you're doing amazing! 🌟</p>
+    <p style="font-size: 0.85rem; color: var(--gray); margin-top: 0.5rem;">
+        ⚠️ Your progress is saved only on this device. Clearing cache or app data will reset it.
+    </p>
+    <button id="reset-progress-btn" class="btn-small">Reset Progress</button>
+</footer>
 
         <!-- Modal for exercise details -->
         <div class="modal" id="exercise-modal">
             <div class="modal-content">
-                <span class="close-modal">&times;</span>
+                <span class="close-modal" role="button" tabindex="0" aria-label="Close modal">&times;</span>
                 <div id="modal-content"></div>
             </div>
         </div>
@@ -1238,6 +1262,10 @@ footer {
             <div class="modal-content">
                 <h3>Reset Progress?</h3>
                 <p>This will erase all your progress and start from Day 1. This action cannot be undone.</p>
+<p style="font-size: 0.85rem; color: #856404; background-color: rgba(255, 193, 7, 0.15); padding: 0.5rem; border-left: 4px solid #ffc107; margin-top: 0.5rem; border-radius: 6px;">
+    ⚠️ Your progress is stored on this device. This reset is safe and just restarts your journey from Day 1. However, clearing app data or cache may erase your progress unintentionally.
+</p>
+
                 <div class="modal-buttons">
                     <button id="confirm-reset" class="btn-danger">Yes, Reset</button>
                     <button id="cancel-reset" class="btn-secondary">Cancel</button>
@@ -2076,23 +2104,33 @@ const calendarManager = (() => {
             actions.appendChild(detailsBtn);
             
             const completeBtn = document.createElement('button');
-            completeBtn.className = 'btn-exercise complete';
-            completeBtn.textContent = storageManager.isExerciseCompleted(exercise.id) ? 'Completed' : 'Mark Complete';
-            completeBtn.disabled = storageManager.isExerciseCompleted(exercise.id);
-            
-            if (!storageManager.isExerciseCompleted(exercise.id)) {
-                completeBtn.addEventListener('click', () => {
-                    storageManager.completeExercise(exercise.id);
-                    completeBtn.textContent = 'Completed';
-                    completeBtn.disabled = true;
-                    card.classList.add('completed');
-                    status.innerHTML = '<span class="checkmark"><i class="fas fa-check"></i></span> Completed';
-                    status.className = 'exercise-status status-complete';
-                    
-                    // Check if all exercises for the day are completed
-                    checkDayCompletion();
-                });
-            }
+completeBtn.className = 'btn-exercise complete';
+completeBtn.setAttribute('aria-label', 'Mark this exercise as complete');
+
+const checkIcon = document.createElement('i');
+checkIcon.className = 'fas fa-check';
+checkIcon.setAttribute('aria-hidden', 'true');
+
+completeBtn.appendChild(checkIcon);
+
+const btnText = document.createTextNode(
+  storageManager.isExerciseCompleted(exercise.id) ? ' Completed' : ' Mark Complete'
+);
+completeBtn.appendChild(btnText);
+
+if (storageManager.isExerciseCompleted(exercise.id)) {
+  completeBtn.disabled = true;
+} else {
+  completeBtn.addEventListener('click', () => {
+    storageManager.completeExercise(exercise.id);
+    completeBtn.textContent = '✔ Completed';
+    completeBtn.disabled = true;
+    card.classList.add('completed');
+    status.innerHTML = '<span class="checkmark"><i class="fas fa-check"></i></span> Completed';
+    status.className = 'exercise-status status-complete';
+    calendarManager.checkDayCompletion();
+  });
+}
             
             actions.appendChild(completeBtn);
             
