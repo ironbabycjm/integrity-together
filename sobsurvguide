@@ -61,15 +61,27 @@
             transition: width 0.3s;
         }
         
-        .day-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 15px;
-            justify-content: center;
-        }
-        
-        .day-btn {
+       .day-nav {
+    display: flex;
+    overflow-x: auto;      /* makes it scroll horizontally */
+    gap: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    scrollbar-width: thin; /* Firefox */
+    justify-content: flex-start; /* align left instead of wrapping */
+    scroll-behavior: smooth; /* ✅ smooth auto-scroll */
+}
+
+.day-nav::-webkit-scrollbar {
+    height: 6px;
+}
+
+.day-nav::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 3px;
+}
+
+.day-btn {
             width: 30px;
             height: 30px;
             border-radius: 15px;
@@ -81,6 +93,8 @@
             font-size: 12px;
             cursor: pointer;
             margin: 2px;
+            
+            flex: 0 0 auto; /* stops buttons from shrinking */
         }
         
         .day-btn.completed {
@@ -332,9 +346,83 @@
             border-color: #2196F3;
         }
         
+        /* Splash screen container */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    text-align: left;
+    transition: opacity 1s ease, visibility 1s ease;
+}
+
+/* Inner content */
+.splash-content {
+    max-width: 600px;
+    padding: 20px;
+    animation: fadeInUp 1.2s ease-in-out;
+}
+
+#splash-screen h1 {
+    font-size: 26px;
+    margin-bottom: 10px;
+    color: #111;
+}
+
+#splash-screen h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #4a90e2;
+}
+
+#splash-screen ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+#splash-screen li {
+    margin-bottom: 12px;
+}
+
+/* Exit animation */
+#splash-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Subtle entry animation */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
     </style>
 </head>
 <body>
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+      <div class="splash-content">
+        <h1>Having a craving?</h1>
+        <h2>Practice S.O.B.E.R.</h2>
+        <ul>
+          <li><strong>S – STOP:</strong> Pause all activity and focus on yourself</li>
+          <li><strong>O – OBSERVE:</strong> Focus your senses on the craving and take time to sit with it</li>
+          <li><strong>B – BREATHE:</strong> Take a few deep breaths or do a breathing exercise</li>
+          <li><strong>E – EXPAND:</strong> Think past the craving and consider the consequences if you indulge</li>
+          <li><strong>R – RESPOND:</strong> Address the craving like it's a person and tell it why you won't indulge today</li>
+        </ul>
+      </div>
+    </div>
+    
     <div class="container">
         <div class="header">
             <h1>30-Day Sobriety Survival Guide</h1>
@@ -761,9 +849,14 @@
             <button onclick="nextDay()" class="btn btn-primary">Next Day</button>
         </div>
         
+        <div id="day30-message" class="completion-message" style="display: none;">
+    <h2>You've Reached Day 30 🌱</h2>
+    <p>Thank you for continuing to show up. This journey isn’t about counting days. It’s about healing, learning, and becoming. Keep going. You’re doing something powerful, one day at a time.</p>
+</div>
+
         <div id="completion-message" class="completion-message">
-            <h2>Congratulations on Completing Your 30 Days!</h2>
-            <p>This is a significant achievement. Now, keep going. With every new day, you're building a stronger foundation for a healthier, happier future. Your best life is ahead of you. Keep taking it one day at a time.</p>
+             <h2>🎉 Congratulations on Completing 60 Days!</h2>
+    <p>You’ve shown up for yourself every single day through the hard parts, the healing, and the growth. This is a powerful milestone, and your journey continues. Keep going. Your best life is already unfolding.</p>
         </div>
         
         <div id="reset-section" class="reset-section">
@@ -804,11 +897,342 @@
 </div>
         </div>
     </div>
+<!-- Day 31 to 60 Placeholder (Initially Hidden) -->
+<div id="extended-program" style="display: none;">
+    <div id="day-31" class="day-content">
+        <h2>Day 31: Reconnect with Your Why</h2>
+        <h3>Goal: Remember your deeper reasons for staying sober.</h3>
+        <ul>
+            <li>Re-read your Day 1 journal or notes.</li>
+            <li>Write a new "why" that fits who you are now.</li>
+            <li>Keep it somewhere visible (mirror, phone, journal).</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I remember why I started, and I’m proud of how far I’ve come."</p>
+    </div>
 
+    <div id="day-32" class="day-content">
+        <h2>Day 32: Understand Your Emotions</h2>
+        <h3>Goal: Learn to respond to emotions instead of reacting.</h3>
+        <ul>
+            <li>Pause 3 times today to name what you're feeling.</li>
+            <li>Ask, “What is this feeling trying to show me?”</li>
+            <li>Practice a calm response.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I feel, reflect, and respond with care."</p>
+    </div>
+
+    <div id="day-33" class="day-content">
+        <h2>Day 33: Financial Wellness Check</h2>
+        <h3>Goal: Stay on top of your recovery finances.</h3>
+        <ul>
+            <li>Review or update your budget.</li>
+            <li>Plan one small sober reward for reaching 33 days.</li>
+            <li>Identify one financial goal for the next 30 days.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I make smart choices for my future."</p>
+    </div>
+
+    <div id="day-34" class="day-content">
+        <h2>Day 34: Practice Self-Compassion</h2>
+        <h3>Goal: Be kind to yourself, especially during tough moments.</h3>
+        <ul>
+            <li>Write down one way you've been hard on yourself.</li>
+            <li>Replace it with a kind, supportive statement.</li>
+            <li>Say it out loud.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I give myself the patience I deserve."</p>
+    </div>
+
+    <div id="day-35" class="day-content">
+        <h2>Day 35: Check in on Your Body</h2>
+        <h3>Goal: Notice how your body is healing.</h3>
+        <ul>
+            <li>Track your sleep, energy, and activity today.</li>
+            <li>Write one positive change you’ve noticed.</li>
+            <li>Do one thing to support your physical wellness.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "Every healthy choice makes me stronger."</p>
+    </div>
+    
+        <div id="day-36" class="day-content">
+        <h2>Day 36: Challenge Negative Thoughts</h2>
+        <h3>Goal: Shift from self-doubt to self-trust.</h3>
+        <ul>
+            <li>Write one negative thought you’ve had recently.</li>
+            <li>Replace it with two true, encouraging statements.</li>
+            <li>Keep these on your phone or journal.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I choose truth and kindness over fear."</p>
+    </div>
+
+    <div id="day-37" class="day-content">
+        <h2>Day 37: Focus on Gratitude</h2>
+        <h3>Goal: Shift your focus to what’s going well.</h3>
+        <ul>
+            <li>Write down 3 things you’re grateful for today.</li>
+            <li>Pick one and explain why it matters.</li>
+            <li>Share your gratitude with someone.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "Gratitude keeps me grounded."</p>
+    </div>
+
+    <div id="day-38" class="day-content">
+        <h2>Day 38: Build a Relapse Prevention Plan</h2>
+        <h3>Goal: Prepare for challenges before they happen.</h3>
+        <ul>
+            <li>List your top 3 relapse triggers.</li>
+            <li>Write what you’ll do if they come up.</li>
+            <li>Share this plan with a trusted person.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I am ready, steady, and prepared."</p>
+    </div>
+
+    <div id="day-39" class="day-content">
+        <h2>Day 39: Tune In to Your Senses</h2>
+        <h3>Goal: Ground yourself with the present moment.</h3>
+        <ul>
+            <li>Take 5 minutes to observe your surroundings.</li>
+            <li>Name 1 thing you can see, hear, touch, smell, and taste.</li>
+            <li>Repeat this later today if needed.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "The present moment is a safe place for me."</p>
+    </div>
+
+    <div id="day-40" class="day-content">
+        <h2>Day 40: Rebuild Trust</h2>
+        <h3>Goal: Begin restoring trust with yourself and others.</h3>
+        <ul>
+            <li>Name one person or area where you want to rebuild trust.</li>
+            <li>Write one small step you can take today toward that.</li>
+            <li>Follow through with action.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "Trust is built with small, consistent steps."</p>
+    </div>
+
+    <div id="day-41" class="day-content">
+        <h2>Day 41: Let Go of Shame</h2>
+        <h3>Goal: Release guilt that no longer serves your growth.</h3>
+        <ul>
+            <li>Write one thing you still feel shame about.</li>
+            <li>Challenge it with compassion and truth.</li>
+            <li>Say out loud, “I release this and forgive myself.”</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I release shame and choose healing."</p>
+    </div>
+
+    <div id="day-42" class="day-content">
+        <h2>Day 42: Create a Calm Corner</h2>
+        <h3>Goal: Build a go-to space for emotional resets.</h3>
+        <ul>
+            <li>Choose a calming spot at home or outside.</li>
+            <li>Add something that brings peace (music, scent, photo).</li>
+            <li>Spend 10 minutes there today, no phone.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I create space to breathe and reset."</p>
+    </div>
+
+    <div id="day-43" class="day-content">
+        <h2>Day 43: Practice Saying No</h2>
+        <h3>Goal: Build boundaries that protect your recovery.</h3>
+        <ul>
+            <li>Think of one time you said yes when you wanted to say no.</li>
+            <li>Imagine how you would handle it differently today.</li>
+            <li>Say no to something small today that doesn’t serve you.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "No is a complete sentence."</p>
+    </div>
+
+    <div id="day-44" class="day-content">
+        <h2>Day 44: Celebrate Small Wins</h2>
+        <h3>Goal: Acknowledge progress, not just perfection.</h3>
+        <ul>
+            <li>List 3 things you did well this week, big or small.</li>
+            <li>Write how those wins support your recovery.</li>
+            <li>Tell a friend or sponsor what you’re proud of.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "My progress deserves to be seen."</p>
+    </div>
+
+    <div id="day-45" class="day-content">
+        <h2>Day 45: Reflect on Your Milestone</h2>
+        <h3>Goal: Celebrate reaching 1.5 months sober!</h3>
+        <ul>
+            <li>Write about your proudest moment so far.</li>
+            <li>Note how you've grown mentally, physically, or emotionally.</li>
+            <li>Reward yourself in a healthy, meaningful way.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I am proud of the person I’m becoming."</p>
+    </div>
+
+    <div id="day-46" class="day-content">
+        <h2>Day 46: Handle Boredom with Intention</h2>
+        <h3>Goal: Replace mindless habits with mindful action.</h3>
+        <ul>
+            <li>Notice one moment today when boredom hits.</li>
+            <li>Try a healthy, engaging activity instead (walk, sketch, stretch).</li>
+            <li>Reflect: did this help your mood?</li>
+        </ul>
+        <p class="affirmation">Affirmation: "My time is valuable and meaningful."</p>
+    </div>
+
+    <div id="day-47" class="day-content">
+        <h2>Day 47: Examine Your Environment</h2>
+        <h3>Goal: Make your surroundings support your recovery.</h3>
+        <ul>
+            <li>Walk through your home with a curious eye.</li>
+            <li>Remove or change one thing that may trigger cravings or negativity.</li>
+            <li>Add one thing that inspires your growth.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I shape my space to support my healing."</p>
+    </div>
+
+    <div id="day-48" class="day-content">
+        <h2>Day 48: Get Inspired</h2>
+        <h3>Goal: Reignite your motivation with stories of hope.</h3>
+        <ul>
+            <li>Watch or read something from someone in recovery.</li>
+            <li>Write down one part that inspired you.</li>
+            <li>Reflect on what that says about your own strength.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I am inspired by others and inspire myself."</p>
+    </div>
+
+    <div id="day-49" class="day-content">
+        <h2>Day 49: Practice Active Listening</h2>
+        <h3>Goal: Deepen connection through presence.</h3>
+        <ul>
+            <li>Choose one conversation today to really focus in on.</li>
+            <li>Repeat back something the other person said.</li>
+            <li>Ask one meaningful follow-up question.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I listen to connect, not just to reply."</p>
+    </div>
+
+    <div id="day-50" class="day-content">
+        <h2>Day 50: See How Far You’ve Come</h2>
+        <h3>Goal: Reflect on your transformation since Day 1.</h3>
+        <ul>
+            <li>Skim through a few earlier days and note changes.</li>
+            <li>Write down 3 words that describe who you are today.</li>
+            <li>Tell yourself, “I did that. I’m doing this.”</li>
+        </ul>
+        <p class="affirmation">Affirmation: "My journey is real, and my growth is undeniable."</p>
+    </div>
+
+    <div id="day-51" class="day-content">
+        <h2>Day 51: Clean Up One Loose End</h2>
+        <h3>Goal: Reduce stress by finishing one lingering task.</h3>
+        <ul>
+            <li>Pick a task you’ve been putting off (email, laundry, bill).</li>
+            <li>Set a timer for 20 minutes and just start it.</li>
+            <li>Celebrate that you followed through.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I take action, even on the small stuff."</p>
+    </div>
+
+    <div id="day-52" class="day-content">
+        <h2>Day 52: Honor Your Energy</h2>
+        <h3>Goal: Match your recovery effort with rest and balance.</h3>
+        <ul>
+            <li>Check in: do you feel overworked, under-stimulated, or balanced?</li>
+            <li>Adjust one thing in your day to better match your needs.</li>
+            <li>Say no or yes to something that reflects your true energy.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I listen to my body and honor its rhythm."</p>
+    </div>
+
+    <div id="day-53" class="day-content">
+        <h2>Day 53: Practice Forgiveness</h2>
+        <h3>Goal: Let go of one resentment that weighs you down.</h3>
+        <ul>
+            <li>Write a short letter to someone you’re still holding anger toward.</li>
+            <li>You don’t need to send it — just get it out.</li>
+            <li>End it with, “I release this for my own peace.”</li>
+        </ul>
+        <p class="affirmation">Affirmation: "Forgiveness frees me more than anyone else."</p>
+    </div>
+
+    <div id="day-54" class="day-content">
+        <h2>Day 54: Strengthen Your Support System</h2>
+        <h3>Goal: Stay connected to people who keep you grounded.</h3>
+        <ul>
+            <li>Reach out to someone who supports your recovery.</li>
+            <li>Thank them for walking this path with you.</li>
+            <li>Ask how they’re doing — connection is a two-way street.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I am supported, and I offer support in return."</p>
+    </div>
+
+    <div id="day-55" class="day-content">
+        <h2>Day 55: Embrace Progress Over Perfection</h2>
+        <h3>Goal: Release the need to "get it right" every time.</h3>
+        <ul>
+            <li>Think of one moment you handled imperfectly this week.</li>
+            <li>Write what you learned from it.</li>
+            <li>Remind yourself that learning is part of recovery.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I grow through effort, not perfection."</p>
+    </div>
+
+    <div id="day-56" class="day-content">
+        <h2>Day 56: Give Back</h2>
+        <h3>Goal: Shift focus outward and serve someone else today.</h3>
+        <ul>
+            <li>Do one small act of service (call, clean, compliment).</li>
+            <li>Notice how it makes you feel afterward.</li>
+            <li>Journal: what kind of giver do you want to be?</li>
+        </ul>
+        <p class="affirmation">Affirmation: "In helping others, I strengthen myself."</p>
+    </div>
+
+    <div id="day-57" class="day-content">
+        <h2>Day 57: Revisit Your Recovery Tools</h2>
+        <h3>Goal: Take inventory of what tools have helped you most.</h3>
+        <ul>
+            <li>List 3 things (habits, people, mindsets) that support your sobriety.</li>
+            <li>Circle the one you forget to use most.</li>
+            <li>Make a plan to use it this week.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "I have tools, and I know how to use them."</p>
+    </div>
+
+    <div id="day-58" class="day-content">
+        <h2>Day 58: Visualize the Future</h2>
+        <h3>Goal: Picture what your life can look like 6 months from now.</h3>
+        <ul>
+            <li>Close your eyes for 3 minutes and imagine a healthy, sober you.</li>
+            <li>Write down 3 details you saw in that vision.</li>
+            <li>Think of one thing you can do this week to move closer to it.</li>
+        </ul>
+        <p class="affirmation">Affirmation: "My future is bright, and I’m walking toward it."</p>
+    </div>
+
+    <div id="day-59" class="day-content">
+        <h2>Day 59: Thank Your Past Self</h2>
+        <h3>Goal: Recognize the version of you that chose recovery.</h3>
+        <ul>
+            <li>Write a thank-you note to your Day 1 self.</li>
+            <li>List a few risks that version of you took.</li>
+            <li>End with: “I’m proud of us.”</li>
+        </ul>
+        <p class="affirmation">Affirmation: "Every part of me brought me to this day."</p>
+    </div>
+
+    <div id="day-60" class="day-content">
+        <h2>Day 60: Own Your Journey</h2>
+        <h3>Goal: Celebrate this major milestone and look ahead.</h3>
+        <ul>
+            <li>Reflect on what 60 days of sobriety means to you.</li>
+            <li>Write a letter to someone who might be starting Day 1 tomorrow.</li>
+            <li>Say out loud: “I did this.”</li>
+        </ul>
+        <p class="affirmation">Affirmation: "This is my story, and I’m proud of every chapter."</p>
+    </div>
+</div>
     <script>
         // Constants
         var ADMIN_PASSWORD = "admin123";
-        var totalDays = 30;
+        var totalDays = 60;
         
         // Variables for tracking progress
         var currentDay = 1;
@@ -871,23 +1295,33 @@
         
         // Show specific day
         function showDay(day) {
-            if(day > maxDay) return;
-            
-            // Hide all days
-            var allDays = document.querySelectorAll('.day-content');
-            for(var i = 0; i < allDays.length; i++) {
-                allDays[i].classList.remove('active');
-            }
-            
-            // Show selected day
-            var dayContent = document.getElementById('day-' + day);
-            if(dayContent) {
-                dayContent.classList.add('active');
-                currentDay = day;
-                saveProgress();
-                updateUI();
-            }
-        }
+    if(day > maxDay) return;
+    
+    // Hide all days
+    var allDays = document.querySelectorAll('.day-content');
+    for(var i = 0; i < allDays.length; i++) {
+        allDays[i].classList.remove('active');
+    }
+    
+    // Show selected day
+    var dayContent = document.getElementById('day-' + day);
+    if(dayContent) {
+        dayContent.classList.add('active');
+        currentDay = day;
+        saveProgress();
+        updateUI();
+    }
+
+    // ✅ Auto-scroll current day into view
+    var activeBtn = document.querySelector('.day-btn.active');
+    if (activeBtn) {
+        activeBtn.scrollIntoView({
+            behavior: "smooth",
+            inline: "center",
+            block: "nearest"
+        });
+    }
+}
         
         // Previous day button
         function prevDay() {
@@ -898,14 +1332,31 @@
         
         // Next day button
         function nextDay() {
-            if(currentDay < totalDays && currentDay < maxDay) {
-                showDay(currentDay + 1);
-            }
-        }
+    // Prevent going past Day 30 unless it's unlocked
+    if (currentDay === 30 && localStorage.getItem("completedDay30") !== "true") {
+        alert("Complete Day 30 to unlock the rest of the program.");
+        return;
+    }
+
+    if (currentDay < totalDays && currentDay < maxDay) {
+        currentDay++; // ✅ Advance properly
+        showDay(currentDay);
+    }
+}
         
         // Mark current day complete
         function markComplete() {
             completedDays[currentDay] = true;
+            // Unlock extended program after Day 30
+if (currentDay === 30) {
+    localStorage.setItem("completedDay30", "true");
+    
+    const day30msg = document.getElementById("day30-message");
+    if (day30msg) day30msg.style.display = "block";
+
+    const extended = document.getElementById("extended-program");
+    if (extended) extended.style.display = "block";
+}
             
             // Update stats for admin
             dayStats[currentDay] = (dayStats[currentDay] || 0) + 1;
@@ -1137,6 +1588,11 @@
         // Load dark mode if user had it enabled before
         window.onload = function () {
             initialize();
+             // Show extended program if Day 30 was already completed
+    if (localStorage.getItem("completedDay30") === "true") {
+        const extended = document.getElementById("extended-program");
+        if (extended) extended.style.display = "block";
+    }
     
             const isDark = localStorage.getItem('darkMode') === 'true';
             if (isDark) {
@@ -1144,6 +1600,20 @@
                 document.getElementById('dark-toggle').checked = true;
             }
         }
+        // Splash screen logic
+window.addEventListener("load", function () {
+    const splash = document.getElementById("splash-screen");
+
+    // Auto-hide after 3 seconds
+    setTimeout(() => {
+        splash.classList.add("fade-out");
+    }, 3000);
+
+    // Allow user to click to skip early
+    splash.addEventListener("click", () => {
+        splash.classList.add("fade-out");
+    });
+});
     </script>
 </body>
 </html>
