@@ -847,12 +847,6 @@
             <p class="affirmation">Affirmation: "This is just the beginning of my new life. I am unstoppable."</p>
         </div>
         
-        <div class="action-btns">
-            <button onclick="prevDay()" class="btn btn-primary">Previous Day</button>
-            <button onclick="markComplete()" class="btn btn-success" id="complete-btn">Mark as Completed</button>
-            <button onclick="nextDay()" class="btn btn-primary">Next Day</button>
-        </div>
-        
         <div id="day30-message" class="completion-message" style="display: none;">
     <h2>You've Reached Day 30 🌱</h2>
     <p>Thank you for continuing to show up. This journey isn’t about counting days. It’s about healing, learning, and becoming. Keep going. You’re doing something powerful, one day at a time.</p>
@@ -867,40 +861,8 @@
             <p>If you'd like to restart your journey, you can reset your progress:</p>
             <button onclick="resetProgress()" class="btn btn-danger">Reset Progress</button>
         </div>
-        
-        <div class="admin-link">
-            <a href="#" onclick="showAdminLogin(); return false;">admin</a>
-        </div>
     </div>
-    
-    <!-- Admin Login Modal -->
-    <div id="admin-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            
-            <div id="login-section">
-                <h2>Admin Login</h2>
-                <div class="login-form">
-                    <input type="password" id="admin-password" placeholder="Enter password">
-                    <button onclick="loginAdmin()">Login</button>
-                </div>
-            </div>
-            
-            <div id="admin-panel" class="admin-panel">
-    <h2>Admin Dashboard</h2>
-    <p>User Completion Statistics:</p>
-    
-    <div class="stats-container" id="stats-container">
-        <!-- Stats will be populated here -->
-    </div>
-    
-    <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-        <button onclick="resetAdminStats()" class="btn btn-danger">Reset Statistics</button>
-        <button onclick="closeModal()" class="btn btn-primary">Close</button>
-    </div>
-</div>
-        </div>
-    </div>
+
 <!-- Day 31 to 60 Placeholder (Initially Hidden) -->
 <div id="extended-program" style="display: none;">
     <div id="day-31" class="day-content">
@@ -1232,6 +1194,46 @@
         </ul>
         <p class="affirmation">Affirmation: "This is my story, and I’m proud of every chapter."</p>
     </div>
+    
+    <div class="action-btns">
+            <button onclick="prevDay()" class="btn btn-primary">Previous Day</button>
+            <button onclick="markComplete()" class="btn btn-success" id="complete-btn">Mark as Completed</button>
+            <button onclick="nextDay()" class="btn btn-primary">Next Day</button>
+        </div>
+        
+        <div class="admin-link">
+            <a href="#" onclick="showAdminLogin(); return false;">admin</a>
+        </div>
+        
+         <!-- Admin Login Modal -->
+    <div id="admin-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            
+            <div id="login-section">
+                <h2>Admin Login</h2>
+                <div class="login-form">
+                    <input type="password" id="admin-password" placeholder="Enter password">
+                    <button onclick="loginAdmin()">Login</button>
+                </div>
+            </div>
+            
+            <div id="admin-panel" class="admin-panel">
+    <h2>Admin Dashboard</h2>
+    <p>User Completion Statistics:</p>
+    
+    <div class="stats-container" id="stats-container">
+        <!-- Stats will be populated here -->
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+        <button onclick="resetAdminStats()" class="btn btn-danger">Reset Statistics</button>
+        <button onclick="closeModal()" class="btn btn-primary">Close</button>
+    </div>
+</div>
+        </div>
+    </div>
+    
 </div>
     <script>
         // Constants
