@@ -61,24 +61,21 @@
             transition: width 0.3s;
         }
         
-       .day-nav {
+      .day-nav {
     display: flex;
-    overflow-x: auto;      /* makes it scroll horizontally */
+    overflow-x: auto;      /* allows horizontal scroll */
     gap: 8px;
     padding: 10px;
     margin-bottom: 15px;
-    scrollbar-width: thin; /* Firefox */
-    justify-content: flex-start; /* align left instead of wrapping */
-    scroll-behavior: smooth; /* ✅ smooth auto-scroll */
+    justify-content: flex-start;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;  /* hide scrollbar in IE/Edge */
+    scrollbar-width: none;     /* hide scrollbar in Firefox */
 }
 
+/* Hide scrollbar in Chrome, Safari, Opera */
 .day-nav::-webkit-scrollbar {
-    height: 6px;
-}
-
-.day-nav::-webkit-scrollbar-thumb {
-    background: #aaa;
-    border-radius: 3px;
+    display: none;
 }
 
 .day-btn {
@@ -435,9 +432,9 @@
             </div>
         </div>
         
-        <div class="intro">
+        <div id="intro" class="intro">
             <p>Welcome to the 30-Day Sobriety Survival Guide. Whether you're beginning your sobriety journey for the first time or looking for a fresh start, this guide provides you with a roadmap for your first month. Sobriety is more than just abstaining from substances; it's about rebuilding your life with a new sense of purpose and integrity.</p>
-            <p>Each day offers actionable steps, affirmations, and tools to support your recovery. One day at a time—let's embark on this transformation.</p>
+            <p>Each day offers actionable steps, affirmations, and tools to support your recovery. One day at a time. Let's embark on this transformation.</p>
         </div>
         
         <div class="progress-container">
@@ -1419,6 +1416,7 @@ if (currentDay === 30) {
                 createDayNav();
                 showDay(1);
                 updateUI();
+                document.getElementById("day30-message").style.display = "none";
             }
         }
         
@@ -1479,7 +1477,27 @@ if (currentDay === 30) {
                 document.getElementById('completion-message').style.display = 'none';
                 document.getElementById('reset-section').style.display = 'none';
             }
-        }
+
+// ✅ Hide intro after Day 1
+const intro = document.getElementById("intro");
+if (intro) {
+    if (currentDay > 1) {
+        intro.style.display = "none";
+    } else {
+        intro.style.display = "block";
+    }
+}
+
+// ✅ Show Day 30 message only if currentDay == 30 and it's completed
+const day30msg = document.getElementById("day30-message");
+if (day30msg) {
+    if (currentDay === 30 && completedDays[30]) {
+        day30msg.style.display = "block";
+    } else {
+        day30msg.style.display = "none";
+    }
+}
+}
         
         // Admin Functions
         function showAdminLogin() {
