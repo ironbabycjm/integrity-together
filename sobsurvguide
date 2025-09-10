@@ -156,6 +156,13 @@
             font-weight: bold;
         }
         
+        body.dark-mode .affirmation {
+    background-color: #222;
+    color: #f1f1f1;
+    border-left: 3px solid #4a90e2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.4); /* soft blue glow */
+}
+        
         .action-btns {
             display: flex;
             justify-content: space-between;
